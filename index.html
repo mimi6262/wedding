@@ -222,6 +222,11 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
 .contact-call-btn:hover{background:var(--rose-light);color:white}
 .contact-section-title{font-family:'Noto Serif KR',serif;font-size:12px;color:var(--tl);letter-spacing:2px;margin:20px 0 10px;text-transform:uppercase}
 
+/* BUDGET ITEM FULLY PAID */
+.bi-header.fully-paid{background:linear-gradient(to right,#F0FBF0,white)}
+.bi-fully-paid-badge{font-size:10px;padding:2px 8px;border-radius:99px;background:#E8F5E9;color:#2E7D32;font-family:'Noto Serif KR';flex-shrink:0;border:1px solid #C8E6C9}
+.bi-unpaid-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 8px;border-radius:99px;background:var(--rose-blush);color:var(--rose-deep);margin-right:4px;margin-top:2px;border:1px solid var(--rose-pale)}
+
 /* DRAG STATE */
 .drag-over{border:2px dashed var(--rose-light)!important;opacity:.7}
 .dragging{opacity:.4}
@@ -484,8 +489,9 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
       <span style="font-size:12px;opacity:.7;">원</span>
     </div>
     <div class="budget-sub">
-      <div><div class="budget-sub-label">지출 합계</div><div class="budget-sub-num" id="budget-spent">₩0</div></div>
-      <div><div class="budget-sub-label">잔여 예산</div><div class="budget-sub-num" id="budget-remain">₩0</div></div>
+      <div><div class="budget-sub-label">계약 금액</div><div class="budget-sub-num" id="budget-spent">₩0</div></div>
+      <div><div class="budget-sub-label">납부 완료</div><div class="budget-sub-num" id="budget-paid">₩0</div></div>
+      <div><div class="budget-sub-label">미납 합계</div><div class="budget-sub-num" id="budget-remain">₩0</div></div>
     </div>
   </div>
   <div class="card">
@@ -792,6 +798,7 @@ function ensureDefaults(){
     if(!('contactPhone' in bi))bi.contactPhone='';
     if(!('contactKakao' in bi))bi.contactKakao='';
     if(!('contactMemo' in bi))bi.contactMemo='';
+    if(!('fullyPaid' in bi))bi.fullyPaid=false;
     (bi.subs||[]).forEach(s=>{
       if(!('dueDate' in s))s.dueDate='';
       if(!('payType' in s))s.payType='잔금';
@@ -1131,19 +1138,25 @@ window.addSection=function(){if(!isEditor())return;const id='sec'+Date.now();sta
 
 // ════════ BUDGET ════════
 function fmtAmt(n){return(n||0).toLocaleString()+'원';}
-function getBiTotal(bi){
-  if(bi.subs&&bi.subs.length>0)return bi.subs.reduce((a,s)=>a+(s.amt||0),0);
-  return bi.amt||0;
+function getBiTotal(bi){ return bi.amt||0; }
+function getPaidTotal(bi){ return (bi.subs||[]).filter(s=>s.paid).reduce((a,s)=>a+(s.amt||0),0); }
+function isFullyPaid(bi){
+  if(bi.fullyPaid)return true;
+  if(bi.subs&&bi.subs.length>0)return bi.subs.every(s=>s.paid);
+  return false;
 }
 
 function renderBudget(){
   const total=state.budgetTotal||0;
   const items=state.budgetItems||[];
-  const spent=items.reduce((a,bi)=>a+getBiTotal(bi),0);
-  const pct=total?Math.min(100,Math.round(spent/total*100)):0;
+  const contracted=items.reduce((a,bi)=>a+getBiTotal(bi),0);
+  const paid=items.reduce((a,bi)=>a+getPaidTotal(bi),0);
+  const remain=total-contracted;
+  const pct=total?Math.min(100,Math.round(contracted/total*100)):0;
   document.getElementById('budget-total-display').innerHTML=`<span>₩</span> ${total.toLocaleString()}`;
-  document.getElementById('budget-spent').textContent='₩'+spent.toLocaleString();
-  document.getElementById('budget-remain').textContent='₩'+(total-spent).toLocaleString();
+  document.getElementById('budget-spent').textContent='₩'+contracted.toLocaleString();
+  document.getElementById('budget-paid').textContent='₩'+paid.toLocaleString();
+  document.getElementById('budget-remain').textContent='₩'+(contracted-paid).toLocaleString();
   document.getElementById('budget-pct').textContent=pct+'%';
   document.getElementById('budget-bar').style.width=pct+'%';
   renderBudgetGraph(items,total);
@@ -1174,19 +1187,36 @@ function renderBudgetGraph(items,total){
   });
 }
 
+window.clearBudgetFilter=function(){activeBudgetCat=null;renderBudget();};
+
 function renderBudgetItems(items){
   const list=document.getElementById('budget-list');list.innerHTML='';
   // filter badge
   const fb=document.getElementById('budget-filter-badge');
-  if(activeBudgetCat){fb.style.display='block';fb.innerHTML=`<span class="bg-filter-badge" onclick="activeBudgetCat=null;renderBudget()">✕ ${activeBudgetCat}</span> <span style="font-size:12px;color:var(--tl)">필터 중</span>`;}
+  if(activeBudgetCat){fb.style.display='block';fb.innerHTML=`<span class="bg-filter-badge" onclick="clearBudgetFilter()">✕ ${activeBudgetCat}</span> <span style="font-size:12px;color:var(--tl)">필터 중</span>`;}
   else fb.style.display='none';
   const filtered=activeBudgetCat?items.filter(bi=>bi.cat===activeBudgetCat):items;
   if(!filtered.length){list.innerHTML='<p style="text-align:center;color:var(--tl);font-size:13px;padding:16px;">등록된 항목이 없어요</p>';return;}
   const ed=isEditor();
   filtered.forEach(bi=>{
     const color=CAT_COLORS[bi.cat]||'#888';
-    const total=getBiTotal(bi);
+    const contractAmt=getBiTotal(bi);
+    const paidAmt=getPaidTotal(bi);
+    const fullyPaid=isFullyPaid(bi);
     const isExp=expandedBudget.has(bi.id);
+
+    // unpaid sub badges shown under the amount
+    const unpaidSubs=(bi.subs||[]).filter(s=>!s.paid);
+    const unpaidBadgesHtml=unpaidSubs.length>0
+      ? `<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:4px">${unpaidSubs.map(s=>`<span class="bi-unpaid-badge">${s.name} ${(s.amt||0).toLocaleString()}원</span>`).join('')}</div>`
+      : '';
+
+    // payment progress under amount when subs exist
+    const subsTotal=(bi.subs||[]).reduce((a,s)=>a+(s.amt||0),0);
+    const progressHtml=bi.subs&&bi.subs.length>0&&subsTotal>0
+      ? `<div style="font-size:11px;color:var(--tl);margin-top:2px">${paidAmt.toLocaleString()}원 / ${subsTotal.toLocaleString()}원 납부</div>`
+      : '';
+
     const subHtml=(bi.subs||[]).map(sub=>{
       const typeMap={예약금:'deposit',잔금:'balance',기타:'other'};
       const typeCls=typeMap[sub.payType||'잔금']||'other';
@@ -1194,13 +1224,14 @@ function renderBudgetItems(items){
       return`<div class="bi-sub-item">
         <div class="bi-sub-paid${sub.paid?' paid':''}" onclick="toggleSubPaid(${bi.id},'${sub.id}')"></div>
         <div style="flex:1;min-width:0">
-          <div class="bi-sub-name">${sub.name}</div>
+          <div class="bi-sub-name${sub.paid?' done':''}" style="${sub.paid?'text-decoration:line-through;color:var(--tl)':''}">${sub.name}</div>
           ${(sub.dueDate||sub.payType)?`<div style="font-size:10px;color:var(--tl);margin-top:2px"><span class="pay-type-badge ${typeCls}" style="font-size:9px">${sub.payType||'잔금'}</span>${dueTxt}</div>`:''}
         </div>
-        <span class="bi-sub-amt">${(sub.amt||0).toLocaleString()}<span class="aunit">원</span></span>
+        <span class="bi-sub-amt" style="${sub.paid?'color:#4CAF50':''}">${(sub.amt||0).toLocaleString()}<span class="aunit">원</span></span>
         ${ed?`<button class="icon-btn" style="font-size:12px" onclick="openEditBudgetSub(${bi.id},'${sub.id}')">✏️</button>`:''}
         ${ed?`<button class="icon-btn" style="font-size:12px" onclick="delBudgetSub(${bi.id},'${sub.id}')">🗑️</button>`:''}
       </div>`;}).join('');
+
     const hasContact=bi.contactName||bi.contactPhone||bi.contactKakao;
     const contactInfoHtml=isExp&&hasContact?`<div style="padding:10px 14px;border-top:1px solid var(--rose-pale);background:#FAFAFA;font-size:12px;color:var(--tm);display:flex;gap:12px;flex-wrap:wrap">
       ${bi.contactName?`<span>👤 ${bi.contactName}</span>`:''}
@@ -1215,24 +1246,49 @@ function renderBudgetItems(items){
         <button class="add-btn sm" onclick="addBudgetSub(${bi.id})">추가</button>
       </div>
       <div style="margin-top:8px"><button onclick="toggleBudgetSubRow(${bi.id})" style="background:none;border:none;color:var(--tl);font-size:12px;cursor:pointer;font-family:'Noto Sans KR'">+ 소분류 추가 (예약금/잔금)</button></div>`:'';
+
+    // manual fully-paid toggle for items with no subs
+    const noSubPaidToggle=ed&&!(bi.subs&&bi.subs.length)?`
+      <div style="padding:10px 14px;border-top:1px solid var(--rose-pale);text-align:center">
+        <button onclick="toggleBiFullyPaid(${bi.id})" style="background:${bi.fullyPaid?'#E8F5E9':'var(--rose-blush)'};color:${bi.fullyPaid?'#2E7D32':'var(--rose-deep)'};border:1px solid ${bi.fullyPaid?'#C8E6C9':'var(--rose-pale)'};border-radius:8px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:'Noto Serif KR'">
+          ${bi.fullyPaid?'✓ 완납 처리됨 · 취소하기':'완납 처리하기'}
+        </button>
+      </div>`:'';
+
     const div=document.createElement('div');
     div.className='budget-item';
+    if(fullyPaid){
+      div.style.opacity='.72';
+      div.style.borderLeft='3px solid #4CAF50';
+    }
     div.innerHTML=`
-      <div class="bi-header" onclick="toggleBudgetExpand(${bi.id})">
-        <div class="bi-dot" style="background:${color}"></div>
+      <div class="bi-header${fullyPaid?' fully-paid':''}" onclick="toggleBudgetExpand(${bi.id})">
+        <div class="bi-dot" style="background:${fullyPaid?'#4CAF50':color}"></div>
         <div class="bi-info">
           <div class="bi-name">${bi.name}</div>
           <div class="bi-cat">${bi.cat}${bi.subs&&bi.subs.length?` · 소분류 ${bi.subs.length}개`:''}${hasContact?' · 📞':''}</div>
+          ${unpaidBadgesHtml}
         </div>
-        <div class="bi-amt">${total.toLocaleString()}<span class="aunit">원</span></div>
+        <div style="text-align:right;flex-shrink:0">
+          <div class="bi-amt">${contractAmt.toLocaleString()}<span class="aunit">원</span></div>
+          ${progressHtml}
+        </div>
+        ${fullyPaid?`<span class="bi-fully-paid-badge">✓ 완납</span>`:''}
         ${ed?`<button class="icon-btn" onclick="event.stopPropagation();openEditBudget(${bi.id})" title="편집">✏️</button>`:''}
         ${ed?`<button class="icon-btn" onclick="event.stopPropagation();delBudget(${bi.id})" title="삭제">🗑️</button>`:''}
       </div>
-      ${isExp?`<div class="bi-subs">${subHtml}${addSubHtml}</div>${contactInfoHtml}`:''}`;
+      ${isExp?`<div class="bi-subs">${subHtml}${addSubHtml}</div>${noSubPaidToggle}${contactInfoHtml}`:''}`;
     list.appendChild(div);
   });
 }
 
+window.toggleBiFullyPaid=function(id){
+  if(!isEditor())return;
+  const bi=(state.budgetItems||[]).find(b=>b.id===id);
+  if(!bi)return;
+  bi.fullyPaid=!bi.fullyPaid;
+  scheduleSave();renderBudget();renderPaymentSchedule();
+};
 window.toggleBudgetExpand=function(id){
   if(expandedBudget.has(id))expandedBudget.delete(id);
   else expandedBudget.add(id);
@@ -1344,7 +1400,11 @@ function renderPaymentSchedule(){
       items.push({biName:bi.name,subName:s.name,amt:s.amt||0,dueDate:s.dueDate,diff,paid:s.paid,payType:s.payType||'잔금',biId:bi.id,subId:s.id});
     });
   });
-  items.sort((a,b)=>a.dueDate.localeCompare(b.dueDate));
+  items.sort((a,b)=>{
+    if(a.paid && !b.paid) return 1;   // 완료는 뒤로
+    if(!a.paid && b.paid) return -1;
+    return a.dueDate.localeCompare(b.dueDate); // 미납은 날짜순
+  });
   if(!items.length){
     el.innerHTML='<p style="font-size:13px;color:var(--tl);text-align:center;padding:16px">납부 예정일이 등록된 항목이 없어요<br><span style="font-size:11px">예산 탭 → 소분류 편집에서 납부 예정일을 추가하세요</span></p>';
     return;

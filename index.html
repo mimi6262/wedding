@@ -222,6 +222,13 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
 .contact-call-btn:hover{background:var(--rose-light);color:white}
 .contact-section-title{font-family:'Noto Serif KR',serif;font-size:12px;color:var(--tl);letter-spacing:2px;margin:20px 0 10px;text-transform:uppercase}
 
+/* PAID-BY TOGGLE */
+.paidby-btn{border:none;border-radius:99px;font-size:11px;padding:3px 9px;cursor:pointer;font-family:'Noto Sans KR';transition:all .2s;white-space:nowrap;font-weight:500;flex-shrink:0}
+.paidby-none{background:#F0F0F0;color:#999}
+.paidby-groom{background:#E3F2FD;color:#1565C0;border:1px solid #BBDEFB}
+.paidby-bride{background:#FCE4EC;color:#880E4F;border:1px solid #F8BBD9}
+.paidby-both{background:#FEF3E2;color:#8B5E10;border:1px solid #FAC775}
+
 /* BUDGET ITEM FULLY PAID */
 .bi-header.fully-paid{background:linear-gradient(to right,#F0FBF0,white)}
 .bi-fully-paid-badge{font-size:10px;padding:2px 8px;border-radius:99px;background:#E8F5E9;color:#2E7D32;font-family:'Noto Serif KR';flex-shrink:0;border:1px solid #C8E6C9}
@@ -489,9 +496,20 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
       <span style="font-size:12px;opacity:.7;">원</span>
     </div>
     <div class="budget-sub">
-      <div><div class="budget-sub-label">계약 금액</div><div class="budget-sub-num" id="budget-spent">₩0</div></div>
-      <div><div class="budget-sub-label">납부 완료</div><div class="budget-sub-num" id="budget-paid">₩0</div></div>
-      <div><div class="budget-sub-label">미납 합계</div><div class="budget-sub-num" id="budget-remain">₩0</div></div>
+      <div><div class="budget-sub-label">총 계약 금액</div><div class="budget-sub-num" id="budget-spent">₩0</div></div>
+      <div><div class="budget-sub-label">🟢 남은 예산</div><div class="budget-sub-num" id="budget-remain" style="color:#A8D8A8;font-size:26px">₩0</div></div>
+    </div>
+    <div style="margin-top:12px;padding:10px 14px;background:rgba(255,255,255,0.12);border-radius:10px;font-size:12px;opacity:0.85">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span>이미 낸 돈</span><span id="budget-paid">₩0</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span id="budget-groom-paid">🤵 신랑 ₩0</span>
+        <span id="budget-bride-paid">👰 신부 ₩0</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.2);padding-top:6px;margin-top:4px">
+        <span>아직 안 낸 돈 (계약된)</span><span id="budget-remain2">₩0</span>
+      </div>
     </div>
   </div>
   <div class="card">
@@ -799,9 +817,11 @@ function ensureDefaults(){
     if(!('contactKakao' in bi))bi.contactKakao='';
     if(!('contactMemo' in bi))bi.contactMemo='';
     if(!('fullyPaid' in bi))bi.fullyPaid=false;
+    if(!('paidBy' in bi))bi.paidBy=null;
     (bi.subs||[]).forEach(s=>{
       if(!('dueDate' in s))s.dueDate='';
       if(!('payType' in s))s.payType='잔금';
+      if(!('paidBy' in s))s.paidBy=null;
     });
   });
   (state.sections||[]).forEach(sec=>sec.items.forEach(it=>{
@@ -1176,11 +1196,25 @@ window.addSection=function(){if(!isEditor())return;const id='sec'+Date.now();sta
 // ════════ BUDGET ════════
 function fmtAmt(n){return(n||0).toLocaleString()+'원';}
 function getBiTotal(bi){ return bi.amt||0; }
-function getPaidTotal(bi){ return (bi.subs||[]).filter(s=>s.paid).reduce((a,s)=>a+(s.amt||0),0); }
+function getPaidTotal(bi){
+  if(bi.subs&&bi.subs.length>0)
+    return (bi.subs||[]).filter(s=>s.paidBy).reduce((a,s)=>a+(s.amt||0),0);
+  return bi.paidBy?(bi.amt||0):0; // 소분류 없으면 부모 paidBy 기준
+}
 function isFullyPaid(bi){
-  if(bi.fullyPaid)return true;
-  if(bi.subs&&bi.subs.length>0)return bi.subs.every(s=>s.paid);
-  return false;
+  if(bi.subs&&bi.subs.length>0)return bi.subs.every(s=>s.paidBy);
+  return !!bi.paidBy; // 소분류 없으면 부모 paidBy로 판단
+}
+function getPersonPaid(items,who){
+  return items.reduce((a,bi)=>{
+    // 소분류 있는 항목: 소분류별 합산
+    if(bi.subs&&bi.subs.length>0){
+      return a+(bi.subs||[]).filter(s=>s.paidBy===who||s.paidBy==='both').reduce((b,s)=>b+(s.amt||0),0);
+    }
+    // 소분류 없는 항목: 부모 paidBy
+    if(bi.paidBy===who||bi.paidBy==='both')return a+(bi.amt||0);
+    return a;
+  },0);
 }
 
 function renderBudget(){
@@ -1190,10 +1224,17 @@ function renderBudget(){
   const paid=items.reduce((a,bi)=>a+getPaidTotal(bi),0);
   const remain=total-contracted;
   const pct=total?Math.min(100,Math.round(contracted/total*100)):0;
+  const groomPaid=getPersonPaid(items,'groom');
+  const bridePaid=getPersonPaid(items,'bride');
   document.getElementById('budget-total-display').innerHTML=`<span>₩</span> ${total.toLocaleString()}`;
   document.getElementById('budget-spent').textContent='₩'+contracted.toLocaleString();
   document.getElementById('budget-paid').textContent='₩'+paid.toLocaleString();
-  document.getElementById('budget-remain').textContent='₩'+(contracted-paid).toLocaleString();
+  document.getElementById('budget-remain').textContent='₩'+remain.toLocaleString();
+  document.getElementById('budget-remain2').textContent='₩'+(contracted-paid).toLocaleString();
+  const gpEl=document.getElementById('budget-groom-paid');
+  const bpEl=document.getElementById('budget-bride-paid');
+  if(gpEl)gpEl.textContent='🤵 '+(state.name1||'신랑')+' ₩'+groomPaid.toLocaleString();
+  if(bpEl)bpEl.textContent='👰 '+(state.name2||'신부')+' ₩'+bridePaid.toLocaleString();
   document.getElementById('budget-pct').textContent=pct+'%';
   document.getElementById('budget-bar').style.width=pct+'%';
   renderBudgetGraph(items,total);
@@ -1243,7 +1284,7 @@ function renderBudgetItems(items){
     const isExp=expandedBudget.has(bi.id);
 
     // unpaid sub badges shown under the amount
-    const unpaidSubs=(bi.subs||[]).filter(s=>!s.paid);
+    const unpaidSubs=(bi.subs||[]).filter(s=>!s.paidBy);
     const unpaidBadgesHtml=unpaidSubs.length>0
       ? `<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:4px">${unpaidSubs.map(s=>`<span class="bi-unpaid-badge">${s.name} ${(s.amt||0).toLocaleString()}원</span>`).join('')}</div>`
       : '';
@@ -1258,13 +1299,19 @@ function renderBudgetItems(items){
       const typeMap={예약금:'deposit',잔금:'balance',기타:'other'};
       const typeCls=typeMap[sub.payType||'잔금']||'other';
       const dueTxt=sub.dueDate?` · 납부일 ${fmt(sub.dueDate)}`:'';
+      const pb=sub.paidBy;
+      const isPaid=!!pb;
+      // paidBy cycle: null→groom→bride→both→null
+      const paidByLabel=pb==='groom'?`🤵 ${state.name1||'신랑'}`:pb==='bride'?`👰 ${state.name2||'신부'}`:pb==='both'?`💑 공동`:'납부자';
+      const paidByCls=pb==='groom'?'paidby-groom':pb==='bride'?'paidby-bride':pb==='both'?'paidby-both':'paidby-none';
       return`<div class="bi-sub-item">
-        <div class="bi-sub-paid${sub.paid?' paid':''}" onclick="toggleSubPaid(${bi.id},'${sub.id}')"></div>
         <div style="flex:1;min-width:0">
-          <div class="bi-sub-name${sub.paid?' done':''}" style="${sub.paid?'text-decoration:line-through;color:var(--tl)':''}">${sub.name}</div>
+          <div class="bi-sub-name" style="${isPaid?'text-decoration:line-through;color:var(--tl)':''}">${sub.name}</div>
           ${(sub.dueDate||sub.payType)?`<div style="font-size:10px;color:var(--tl);margin-top:2px"><span class="pay-type-badge ${typeCls}" style="font-size:9px">${sub.payType||'잔금'}</span>${dueTxt}</div>`:''}
         </div>
-        <span class="bi-sub-amt" style="${sub.paid?'color:#4CAF50':''}">${(sub.amt||0).toLocaleString()}<span class="aunit">원</span></span>
+        <span class="bi-sub-amt" style="${isPaid?'color:#4CAF50':''}">${(sub.amt||0).toLocaleString()}<span class="aunit">원</span></span>
+        ${ed?`<button class="paidby-btn ${paidByCls}" onclick="cyclePaidBy(${bi.id},'${sub.id}')" title="납부자 선택">${paidByLabel}</button>`
+            :pb?`<span class="paidby-btn ${paidByCls}" style="cursor:default">${paidByLabel}</span>`:''}
         ${ed?`<button class="icon-btn" style="font-size:12px" onclick="openEditBudgetSub(${bi.id},'${sub.id}')">✏️</button>`:''}
         ${ed?`<button class="icon-btn" style="font-size:12px" onclick="delBudgetSub(${bi.id},'${sub.id}')">🗑️</button>`:''}
       </div>`;}).join('');
@@ -1284,12 +1331,16 @@ function renderBudgetItems(items){
       </div>
       <div style="margin-top:8px"><button onclick="toggleBudgetSubRow(${bi.id})" style="background:none;border:none;color:var(--tl);font-size:12px;cursor:pointer;font-family:'Noto Sans KR'">+ 소분류 추가 (예약금/잔금)</button></div>`:'';
 
-    // manual fully-paid toggle for items with no subs
-    const noSubPaidToggle=ed&&!(bi.subs&&bi.subs.length)?`
-      <div style="padding:10px 14px;border-top:1px solid var(--rose-pale);text-align:center">
-        <button onclick="toggleBiFullyPaid(${bi.id})" style="background:${bi.fullyPaid?'#E8F5E9':'var(--rose-blush)'};color:${bi.fullyPaid?'#2E7D32':'var(--rose-deep)'};border:1px solid ${bi.fullyPaid?'#C8E6C9':'var(--rose-pale)'};border-radius:8px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:'Noto Serif KR'">
-          ${bi.fullyPaid?'✓ 완납 처리됨 · 취소하기':'완납 처리하기'}
-        </button>
+    // 소분류 없는 항목: 납부자 순환 버튼
+    const biPb=bi.paidBy;
+    const biPbLabel=biPb==='groom'?`🤵 ${state.name1||'신랑'}`:biPb==='bride'?`👰 ${state.name2||'신부'}`:biPb==='both'?'💑 공동':'납부자 선택';
+    const biPbCls=biPb==='groom'?'paidby-groom':biPb==='bride'?'paidby-bride':biPb==='both'?'paidby-both':'paidby-none';
+    const noSubPaidToggle=!(bi.subs&&bi.subs.length)?`
+      <div style="padding:12px 14px;border-top:1px solid var(--rose-pale);display:flex;align-items:center;gap:10px;background:${biPb?'#F9FFF9':'white'}">
+        <span style="font-size:12px;color:var(--tl);flex:1">납부자</span>
+        ${ed?`<button class="paidby-btn ${biPbCls}" onclick="cycleBiPaidBy(${bi.id})" style="font-size:12px;padding:5px 14px">${biPbLabel}</button>`
+           :biPb?`<span class="paidby-btn ${biPbCls}" style="cursor:default;font-size:12px;padding:5px 14px">${biPbLabel}</span>`:'<span style="font-size:12px;color:var(--tl)">미지정</span>'}
+        ${biPb?`<span style="font-size:11px;color:#4CAF50">✓ 완납</span>`:''}
       </div>`:'';
 
     const div=document.createElement('div');
@@ -1319,11 +1370,13 @@ function renderBudgetItems(items){
   });
 }
 
-window.toggleBiFullyPaid=function(id){
+window.cycleBiPaidBy=function(id){
   if(!isEditor())return;
-  const bi=(state.budgetItems||[]).find(b=>b.id===id);
-  if(!bi)return;
-  bi.fullyPaid=!bi.fullyPaid;
+  const bi=(state.budgetItems||[]).find(b=>b.id===id);if(!bi)return;
+  const cycle=[null,'groom','bride','both'];
+  const cur=cycle.indexOf(bi.paidBy);
+  bi.paidBy=cycle[(cur+1)%cycle.length];
+  bi.fullyPaid=!!bi.paidBy;
   scheduleSave();renderBudget();renderPaymentSchedule();
 };
 window.toggleBudgetExpand=function(id){
@@ -1335,12 +1388,24 @@ window.toggleBudgetSubRow=function(id){
   const r=document.getElementById('bsf-'+id);if(!r)return;
   r.style.display=r.style.display==='none'?'flex':'none';
 };
-window.toggleSubPaid=function(biId,subId){
+window.togglePayPaid=function(biId,subId){
   if(!isEditor())return;
-  const bi=(state.budgetItems||[]).find(b=>b.id===biId);
-  if(!bi)return;
-  const sub=(bi.subs||[]).find(s=>s.id===subId);
-  if(sub){sub.paid=!sub.paid;scheduleSave();renderBudget();}
+  const bi=(state.budgetItems||[]).find(b=>b.id==biId);if(!bi)return;
+  const sub=(bi.subs||[]).find(s=>s.id===subId);if(!sub)return;
+  sub.paid=!sub.paid;
+  if(!sub.paid)sub.paidBy=null; // 해제하면 납부자도 초기화
+  scheduleSave();renderPaymentSchedule();renderBudget();
+};
+
+window.cyclePaidBy=function(biId,subId){
+  if(!isEditor())return;
+  const bi=(state.budgetItems||[]).find(b=>b.id===biId);if(!bi)return;
+  const sub=(bi.subs||[]).find(s=>s.id===subId);if(!sub)return;
+  const cycle=[null,'groom','bride','both'];
+  const cur=cycle.indexOf(sub.paidBy);
+  sub.paidBy=cycle[(cur+1)%cycle.length];
+  sub.paid=!!sub.paidBy; // 납부자 선택하면 paid도 자동 설정
+  scheduleSave();renderBudget();renderPaymentSchedule();
 };
 window.openEditBudget=function(id){
   if(!isEditor())return;
@@ -1409,7 +1474,7 @@ window.addBudgetItem=function(){
   if(!isEditor())return;
   const n=document.getElementById('b-name').value.trim(),a=parseInt(document.getElementById('b-amt').value)||0,c=document.getElementById('b-cat').value;
   if(!n)return;
-  (state.budgetItems=state.budgetItems||[]).push({id:Date.now(),name:n,cat:c,amt:a,subs:[],contactName:'',contactPhone:'',contactKakao:'',contactMemo:''});
+  (state.budgetItems=state.budgetItems||[]).push({id:Date.now(),name:n,cat:c,amt:a,subs:[],contactName:'',contactPhone:'',contactKakao:'',contactMemo:'',fullyPaid:false,paidBy:null});
   document.getElementById('b-name').value='';document.getElementById('b-amt').value='';
   scheduleSave();renderBudget();
 };
@@ -1419,7 +1484,7 @@ window.addBudgetSub=function(biId){
   const name=n?n.value.trim():'';if(!name)return;
   const bi=(state.budgetItems||[]).find(b=>b.id===biId);
   if(!bi.subs)bi.subs=[];
-  bi.subs.push({id:'bs'+Date.now(),name,amt:parseInt(a?a.value:0)||0,paid:false,dueDate:'',payType:'잔금'});
+  bi.subs.push({id:'bs'+Date.now(),name,amt:parseInt(a?a.value:0)||0,paid:false,dueDate:'',payType:'잔금',paidBy:null});
   expandedBudget.add(biId);scheduleSave();renderBudget();renderPaymentSchedule();
 };
 window.delBudget=function(id){if(!isEditor())return;if(!confirm('항목을 삭제할까요?'))return;state.budgetItems=state.budgetItems.filter(i=>i.id!==id);scheduleSave();renderBudget();renderPaymentSchedule();};
@@ -1434,7 +1499,7 @@ function renderPaymentSchedule(){
     (bi.subs||[]).filter(s=>s.dueDate).forEach(s=>{
       const due=new Date(s.dueDate+'T00:00:00');
       const diff=Math.round((due-today)/86400000);
-      items.push({biName:bi.name,subName:s.name,amt:s.amt||0,dueDate:s.dueDate,diff,paid:s.paid,payType:s.payType||'잔금',biId:bi.id,subId:s.id});
+      items.push({biName:bi.name,subName:s.name,amt:s.amt||0,dueDate:s.dueDate,diff,paid:s.paid,paidBy:s.paidBy||null,payType:s.payType||'잔금',biId:bi.id,subId:s.id});
     });
   });
   items.sort((a,b)=>{
@@ -1455,29 +1520,24 @@ function renderPaymentSchedule(){
     else if(it.diff<=30){cls='soon';ddayTxt=`D-${it.diff}`;ddayCls='soon';}
     else{ddayTxt=`D-${it.diff}`;}
     const typeMap={예약금:'deposit',잔금:'balance',기타:'other'};
-    const typeCls=typeMap[it.payType]||'other';
+    const pb=it.paidBy;
+    const pbLabel=pb==='groom'?`🤵 ${state.name1||'신랑'}`:pb==='bride'?`👰 ${state.name2||'신부'}`:pb==='both'?'💑 공동':'';
+    const pbCls=pb==='groom'?'paidby-groom':pb==='bride'?'paidby-bride':pb==='both'?'paidby-both':'';
     const div=document.createElement('div');
     div.className=`pay-item ${cls}`;
     div.innerHTML=`
       <div class="pay-dday ${ddayCls}">${ddayTxt}</div>
       <div class="pay-info">
         <div class="pay-name">${it.biName}</div>
-        <div class="pay-sub">${it.subName} · ${it.dueDate}</div>
+        <div class="pay-sub">${it.subName} · ${it.dueDate}${pbLabel?` · <span class="paidby-btn ${pbCls}" style="cursor:default;font-size:10px;padding:1px 6px">${pbLabel}</span>`:''}</div>
       </div>
-      <span class="pay-type-badge ${typeCls}">${it.payType}</span>
-      <div class="pay-amt">${(it.amt).toLocaleString()}<span class="aunit">원</span></div>
-      ${isEditor()?`<div class="pay-paid-toggle${it.paid?' paid':''}" onclick="togglePayPaid('${it.biId}','${it.subId}')"></div>`:''}`;
+      <span class="pay-type-badge ${typeMap[it.payType]||'other'}">${it.payType}</span>
+      <div class="pay-amt">${it.amt.toLocaleString()}<span class="aunit">원</span></div>
+      ${isEditor()?`<div class="pay-paid-toggle${it.paid?' paid':''}" onclick="togglePayPaid('${it.biId}','${it.subId}')" title="${it.paid?'납부 완료 취소':'납부 완료 처리'}"></div>`
+        :it.paid?`<div class="pay-paid-toggle paid"></div>`:''}`;
     el.appendChild(div);
   });
 }
-
-window.togglePayPaid=function(biId,subId){
-  if(!isEditor())return;
-  const bi=(state.budgetItems||[]).find(b=>b.id==biId);
-  if(!bi)return;
-  const sub=(bi.subs||[]).find(s=>s.id===subId);
-  if(sub){sub.paid=!sub.paid;scheduleSave();renderPaymentSchedule();renderBudget();}
-};
 
 // ════════ CONTACTS ════════
 function catIcon(cat){const m={스드메:'💒',예복:'🤵',예물:'💍',본식:'📸',혼주:'👨‍👩‍👧',혼수:'🏠',플래너:'📋',기타:'📌'};return m[cat]||'📌';}

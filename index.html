@@ -398,7 +398,10 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
 <!-- OVERLAYS -->
 <div id="role-badge"></div>
 <div id="sync-status"><span class="sdot" id="sdot"></span><span id="stxt">연결 중...</span></div>
-<div id="viewer-banner">👁 보기 전용 모드입니다</div>
+<div id="viewer-banner" style="display:flex;align-items:center;justify-content:center;gap:12px">
+  <span>👁 보기 전용 모드입니다</span>
+  <button onclick="doLogout()" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:6px;color:white;font-size:11px;padding:3px 10px;cursor:pointer;font-family:'Noto Serif KR';letter-spacing:.5px">로그아웃</button>
+</div>
 
 <!-- HEADER -->
 <header class="app-header">

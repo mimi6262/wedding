@@ -385,7 +385,7 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
 
 <!-- MODAL -->
 <div id="modal-overlay" onclick="closeModalOnBg(event)">
-  <div class="mbox" id="modal-box"></div>
+  <div class="mbox" id="modal-box" onclick="event.stopPropagation()"></div>
 </div>
 
 <!-- CALENDAR POPUP -->

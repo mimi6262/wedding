@@ -1038,6 +1038,7 @@ function renderChecklist(){
           ${st==='done'?'<span class="cbadge done">완료</span>':''}
           ${st==='cancelled'?'<span class="cbadge cancelled">취소</span>':''}
           <button class="expand-btn${isExp?' open':''}" onclick="event.stopPropagation();toggleExp('${item.id}')">▶</button>
+          ${ed?`<button class="icon-btn" onclick="event.stopPropagation();openMoveItem('${sec.id}','${item.id}')" title="다른 카테고리로 이동" style="font-size:13px">↗</button>`:''}
           ${ed?`<button class="icon-btn" onclick="event.stopPropagation();openEditItem('${sec.id}','${item.id}',null)" title="편집">✏️</button>`:''}
           ${ed?`<button class="icon-btn" onclick="event.stopPropagation();delItem('${sec.id}','${item.id}')" title="삭제">🗑️</button>`:''}
         </div>
@@ -1129,6 +1130,42 @@ window.toggleSubRow=function(id){
   if(!showing){expandedItems.add(id);const sl=document.getElementById('sl-'+id);if(sl)sl.style.display='block';}
 };
 window.delItem=function(sId,iId){if(!isEditor())return;if(!confirm('항목을 삭제할까요?'))return;const sec=state.sections.find(s=>s.id===sId);sec.items=sec.items.filter(i=>i.id!==iId);scheduleSave();renderChecklist();};
+
+window.openMoveItem=function(sId,iId){
+  if(!isEditor())return;
+  const item=state.sections.find(s=>s.id===sId)?.items.find(i=>i.id===iId);
+  if(!item)return;
+  const otherSections=state.sections.filter(s=>s.id!==sId);
+  if(!otherSections.length){alert('이동할 수 있는 다른 카테고리가 없어요.');return;}
+  openModal(`
+    <h3>↗ 항목 이동</h3>
+    <p style="font-size:13px;color:var(--tl);margin-bottom:16px">"${item.name}"을(를) 어느 카테고리로 이동할까요?</p>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      ${otherSections.map(s=>`
+        <button class="mbtn secondary" style="text-align:left;padding:12px 16px;font-size:14px;font-family:'Noto Sans KR'"
+          onclick="moveItem('${sId}','${iId}','${s.id}')">
+          ${s.title}
+          <span style="font-size:11px;color:var(--tl);float:right">${s.items.length}개 항목</span>
+        </button>`).join('')}
+    </div>
+    <div class="mbtn-row" style="margin-top:12px">
+      <button class="mbtn secondary" onclick="closeModal()">취소</button>
+    </div>`);
+};
+
+window.moveItem=function(fromSecId,itemId,toSecId){
+  if(!isEditor())return;
+  const fromSec=state.sections.find(s=>s.id===fromSecId);
+  const toSec=state.sections.find(s=>s.id===toSecId);
+  if(!fromSec||!toSec)return;
+  const idx=fromSec.items.findIndex(i=>i.id===itemId);
+  if(idx===-1)return;
+  const [item]=fromSec.items.splice(idx,1);
+  toSec.items.push(item);
+  closeModal();
+  scheduleSave();
+  renderChecklist();
+};
 window.delSub=function(sId,iId,subId){if(!isEditor())return;if(!confirm('하위 항목을 삭제할까요?'))return;const item=state.sections.find(s=>s.id===sId).items.find(i=>i.id===iId);item.subs=(item.subs||[]).filter(s=>s.id!==subId);expandedItems.add(iId);scheduleSave();renderChecklist();};
 window.addItem=function(sId){if(!isEditor())return;const ni=document.getElementById('ni-'+sId),nd=document.getElementById('nd-'+sId);const val=ni.value.trim();if(!val)return;state.sections.find(s=>s.id===sId).items.push({id:'u'+Date.now(),name:val,detail:'',status:'pending',date:nd.value||'',subs:[],cancelMemo:''});ni.value='';nd.value='';scheduleSave();renderChecklist();};
 window.addSub=function(sId,iId){if(!isEditor())return;const ni=document.getElementById('sn-'+iId),nd=document.getElementById('sd-'+iId);const val=ni?ni.value.trim():'';if(!val)return;const item=state.sections.find(s=>s.id===sId).items.find(i=>i.id===iId);if(!item.subs)item.subs=[];item.subs.push({id:'sub'+Date.now(),name:val,status:'pending',date:nd?nd.value:'',cancelMemo:''});expandedItems.add(iId);scheduleSave();renderChecklist();};

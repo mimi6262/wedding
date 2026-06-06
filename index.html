@@ -222,6 +222,44 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
 .contact-call-btn:hover{background:var(--rose-light);color:white}
 .contact-section-title{font-family:'Noto Serif KR',serif;font-size:12px;color:var(--tl);letter-spacing:2px;margin:20px 0 10px;text-transform:uppercase}
 
+/* INLINE EDIT */
+.bi-amt-inline{cursor:pointer;border-radius:6px;padding:2px 4px;transition:background .2s}
+.bi-amt-inline:hover{background:var(--rose-blush)}
+.bi-amt-input{width:130px;font-size:16px;font-family:'Cormorant Garamond',serif;border:1.5px solid var(--rose);border-radius:8px;padding:3px 8px;text-align:right;color:var(--rose-deep);outline:none;background:white}
+
+/* LAST EDIT INDICATOR */
+.last-edit-bar{font-size:11px;color:var(--tl);text-align:right;padding:4px 0 8px;letter-spacing:.3px}
+.last-edit-bar.groom{color:#1565C0}.last-edit-bar.bride{color:#880E4F}
+
+/* PERSON SELECTOR */
+.person-select-banner{background:var(--ivory);border:1px solid var(--rose-pale);border-radius:12px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.person-btn{padding:6px 16px;border-radius:99px;border:1.5px solid var(--rose-pale);background:white;cursor:pointer;font-size:13px;font-family:'Noto Serif KR';transition:all .2s;letter-spacing:.5px}
+.person-btn.active-groom{background:#E3F2FD;color:#1565C0;border-color:#BBDEFB}
+.person-btn.active-bride{background:#FCE4EC;color:#880E4F;border-color:#F8BBD9}
+
+/* SETTLEMENT VIEW */
+.settle-sort-bar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.settle-sort-btn{font-size:11px;padding:4px 10px;border-radius:99px;border:1px solid var(--rose-pale);background:white;cursor:pointer;color:var(--tm);font-family:'Noto Serif KR';transition:all .2s;letter-spacing:.3px}
+.settle-sort-btn.active{background:var(--rose);color:white;border-color:var(--rose)}
+.settle-person{margin-bottom:20px}
+.settle-person-header{display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:12px;margin-bottom:8px}
+.settle-person-header.groom{background:#E3F2FD}
+.settle-person-header.bride{background:#FCE4EC}
+.settle-person-header.both{background:#FEF3E2}
+.settle-person-header.unknown{background:var(--ivory)}
+.settle-person-name{font-size:15px;font-weight:500;flex:1}
+.settle-person-total{font-family:'Cormorant Garamond',serif;font-size:22px}
+.settle-cat-group{margin-bottom:10px}
+.settle-cat-label{font-size:10px;color:var(--tl);letter-spacing:2px;font-family:'Noto Serif KR';padding:0 14px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.settle-cat-label::after{content:'';flex:1;height:1px;background:var(--rose-pale)}
+.settle-cat-subtotal{font-size:11px;color:var(--tl);margin-left:auto;font-family:'Cormorant Garamond',serif;font-size:13px}
+.settle-row{display:flex;align-items:center;font-size:13px;color:var(--tm);padding:5px 14px;gap:8px;border-radius:8px;transition:background .15s}
+.settle-row:hover{background:var(--rose-blush)}
+.settle-row-name{flex:1;min-width:0}
+.settle-row-sub{font-size:11px;color:var(--tl);display:block;margin-top:1px}
+.settle-row-amt{font-family:'Cormorant Garamond',serif;font-size:15px;white-space:nowrap;color:var(--rose-deep)}
+.settle-cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
 /* PAID-BY TOGGLE */
 .paidby-btn{border:none;border-radius:99px;font-size:11px;padding:3px 9px;cursor:pointer;font-family:'Noto Sans KR';transition:all .2s;white-space:nowrap;font-weight:500;flex-shrink:0}
 .paidby-none{background:#F0F0F0;color:#999}
@@ -488,6 +526,14 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
 <!-- BUDGET -->
 <div id="page-budget" class="page">
   <p class="section-intro">✦ 예산 관리 ✦</p>
+  <!-- 나는 누구 배너 (편집자만) -->
+  <div class="person-select-banner" id="person-banner" style="display:none">
+    <span style="font-size:12px;color:var(--tl);font-family:'Noto Serif KR'">지금 작업하는 사람:</span>
+    <button class="person-btn" id="pbtn-groom" onclick="selectPerson('groom')">🤵 <span id="pbtn-groom-name">신랑</span></button>
+    <button class="person-btn" id="pbtn-bride" onclick="selectPerson('bride')">👰 <span id="pbtn-bride-name">신부</span></button>
+    <span style="font-size:11px;color:var(--tl);margin-left:auto">선택하면 수정 이력에 기록돼요</span>
+  </div>
+  <div class="last-edit-bar" id="last-edit-bar"></div>
   <div class="budget-summary">
     <div class="budget-total-label">총 예산</div>
     <div class="budget-total-num" id="budget-total-display"><span>₩</span> 0</div>
@@ -520,6 +566,13 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
     <div class="budget-bar-wrap"><div class="budget-bar" id="budget-bar" style="width:0%"></div></div>
     <div class="budget-graph" id="budget-graph"></div>
   </div>
+  <!-- 정산 뷰 -->
+  <div class="card" id="settlement-card">
+    <div class="card-title" style="cursor:pointer" onclick="toggleSettlement()">
+      💸 정산 내역 <span id="settle-toggle-arrow" style="font-size:12px;color:var(--tl)">▼</span>
+    </div>
+    <div id="settlement-content" style="display:none"></div>
+  </div>
   <div class="card">
     <div class="card-title">✦ 지출 항목</div>
     <div id="budget-filter-badge" style="display:none"></div>
@@ -530,10 +583,17 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
       <div class="budget-add-row">
         <input class="inp-name" id="b-name" type="text" placeholder="항목명 (예: 드레스)">
         <input class="inp-amt" id="b-amt" type="number" placeholder="금액 (원)">
-        <select id="b-cat" style="border-radius:10px;border:1px solid var(--rose-pale);padding:8px 10px;font-size:13px;font-family:'Noto Sans KR';color:var(--td);background:white;outline:none;">
-          <option>스드메</option><option>예복</option><option>예물</option><option>본식</option><option>혼수</option><option>기타</option>
-        </select>
+        <select id="b-cat" style="border-radius:10px;border:1px solid var(--rose-pale);padding:8px 10px;font-size:13px;font-family:'Noto Sans KR';color:var(--td);background:white;outline:none;" id="b-cat"></select>
         <button class="add-btn" onclick="addBudgetItem()">추가</button>
+      </div>
+      <!-- 카테고리 관리 -->
+      <div id="cat-manage-area" style="margin-top:10px;padding:10px 12px;background:var(--ivory);border-radius:10px">
+        <div style="font-size:11px;color:var(--tl);margin-bottom:8px;font-family:'Noto Serif KR';letter-spacing:1px">카테고리 관리</div>
+        <div id="cat-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px"></div>
+        <div style="display:flex;gap:6px">
+          <input id="new-cat-input" type="text" placeholder="새 카테고리명" style="flex:1;font-size:13px;padding:7px 10px;border-radius:8px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR'">
+          <button class="add-btn sm" onclick="addBudgetCat()">추가</button>
+        </div>
       </div>
     </div>
   </div>
@@ -704,10 +764,13 @@ function setErr(m){document.getElementById('lerr').textContent=m;}
 async function wlog(r){
   try{const ref=doc(db,'wedding','log');const s=await getDoc(ref);const sess=s.exists()?(s.data().sessions||[]):[];sess.unshift({role:r,time:new Date().toISOString()});await setDoc(ref,{sessions:sess.slice(0,30)});}catch(e){}
 }
+let currentUserPerson = sessionStorage.getItem('currentUserPerson')||null; // 'groom'|'bride'|null
+
 function enterApp(r){
   role=r; sessionStorage.setItem('wr',r);
   document.getElementById('login-screen').style.display='none';
-  applyRoleUI(r); startSync();
+  applyRoleUI(r);
+  startSync();
 }
 function applyRoleUI(r){
   const b=document.getElementById('role-badge');
@@ -740,8 +803,11 @@ function scheduleSave(){
   setSyncUI('saving','저장 중...');
   clearTimeout(saveTimer);
   saveTimer=setTimeout(async()=>{
-    try{await setDoc(doc(db,'wedding','state'),{...state,updatedAt:serverTimestamp()});setSyncUI('live','저장됨 ✓');}
-    catch(e){setSyncUI('err','저장 실패');}
+    try{
+      const editEntry={person:currentUserPerson,name:currentUserPerson==='groom'?(state.name1||'신랑'):currentUserPerson==='bride'?(state.name2||'신부'):'편집자',time:new Date().toISOString()};
+      await setDoc(doc(db,'wedding','state'),{...state,updatedAt:serverTimestamp(),lastEdit:editEntry});
+      setSyncUI('live','저장됨 ✓');
+    }catch(e){setSyncUI('err','저장 실패');}
   },800);
 }
 
@@ -756,12 +822,8 @@ async function saveNotices(){
 function defaultState(){
   return{
     weddingDate:'',name1:'신랑',name2:'신부',budgetTotal:0,
-    budgetItems:[
-      {id:1,name:'베뉴 (엔씨 컨벤션홀)',cat:'본식',amt:0,subs:[],contactName:'',contactPhone:'',contactKakao:'',contactMemo:''},
-      {id:2,name:'스튜디오 (제주스냅)',cat:'스드메',amt:0,subs:[],contactName:'',contactPhone:'',contactKakao:'',contactMemo:''},
-      {id:3,name:'헤어메이크업 (서의 부원장)',cat:'스드메',amt:0,subs:[],contactName:'서의 부원장',contactPhone:'',contactKakao:'',contactMemo:''},
-      {id:4,name:'본식 스냅 (앤드류권)',cat:'본식',amt:0,subs:[],contactName:'앤드류권',contactPhone:'',contactKakao:'',contactMemo:''},
-    ],
+    budgetCats:['스드메','예복','예물','본식','혼주','혼수','기타'],
+    budgetItems:[],
     manualEvents:[
       {id:1,date:'2025-04-08',name:'제주스냅 출발 ✈',fromChecklist:false},
       {id:2,date:'2025-04-09',name:'제주 스튜디오 촬영 📷',fromChecklist:false},
@@ -810,6 +872,7 @@ function ensureDefaults(){
   Object.keys(def).forEach(k=>{if(!(k in state))state[k]=def[k];});
   if(!state.notices)state.notices=def.notices;
   if(!state.contacts)state.contacts=[];
+  if(!state.budgetCats||!state.budgetCats.length)state.budgetCats=['스드메','예복','예물','본식','혼주','혼수','기타'];
   (state.budgetItems||[]).forEach(bi=>{
     if(!bi.subs)bi.subs=[];
     if(!('contactName' in bi))bi.contactName='';
@@ -840,6 +903,7 @@ function renderAll(){
   if(state.weddingDate)document.getElementById('wedding-date-input').value=state.weddingDate;
   if(state.budgetTotal)document.getElementById('budget-total-input').value=state.budgetTotal;
   calcDday(state.weddingDate); renderOverview(); renderPaymentSchedule(); renderNotices(); renderChecklist(); renderBudget(); renderCalendar();
+  renderLastEdit(); updatePersonBanner();
   ['add-section-btn','budget-add-form','event-add-area'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=isEditor()?'':'none';});
 }
 
@@ -1002,10 +1066,8 @@ function renderChecklist(){
     const pct=total?Math.round(done/total*100):0;
     const div=document.createElement('div');
     div.className='card check-section';
-    div.setAttribute('draggable','true');
     div.dataset.secIdx=secIdx;
-    div.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',secIdx);div.classList.add('dragging');});
-    div.addEventListener('dragend',()=>div.classList.remove('dragging'));
+    // drop target only (not draggable itself)
     div.addEventListener('dragover',e=>{e.preventDefault();div.classList.add('drag-over');});
     div.addEventListener('dragleave',()=>div.classList.remove('drag-over'));
     div.addEventListener('drop',e=>{
@@ -1072,7 +1134,10 @@ function renderChecklist(){
       </div>`:'';
     div.innerHTML=`
       <div class="cs-header">
-        <span class="drag-handle" title="드래그하여 순서 변경">⠿</span>
+        <span class="drag-handle" draggable="true"
+          ondragstart="event.stopPropagation();event.dataTransfer.setData('text/plain','${secIdx}');this.closest('.check-section').classList.add('dragging')"
+          ondragend="this.closest('.check-section').classList.remove('dragging')"
+          title="드래그하여 순서 변경">⠿</span>
         <input class="cs-title-input" value="${sec.title}" ${ed?`onchange="renameSection('${sec.id}',this.value)"`:'readonly'} onclick="event.stopPropagation()">
         <span class="cs-progress">${done} / ${total}</span>
         ${ed?`<button class="icon-btn" onclick="delSection('${sec.id}')">🗑️</button>`:''}
@@ -1193,6 +1258,206 @@ window.renameSection=function(sId,t){if(!isEditor())return;const sec=state.secti
 window.delSection=function(sId){if(!isEditor())return;if(!confirm('이 카테고리를 삭제할까요?'))return;state.sections=state.sections.filter(s=>s.id!==sId);scheduleSave();renderChecklist();};
 window.addSection=function(){if(!isEditor())return;const id='sec'+Date.now();state.sections.push({id,title:'새 카테고리',items:[]});scheduleSave();renderChecklist();setTimeout(()=>{const ins=document.querySelectorAll('.cs-title-input');if(ins.length)ins[ins.length-1].select();},50);};
 
+// ════════ PERSON SELECTOR ════════
+window.selectPerson=function(p){
+  currentUserPerson=p;
+  sessionStorage.setItem('currentUserPerson',p);
+  updatePersonBanner();
+};
+function updatePersonBanner(){
+  const banner=document.getElementById('person-banner');
+  const gb=document.getElementById('pbtn-groom');
+  const bb=document.getElementById('pbtn-bride');
+  const gn=document.getElementById('pbtn-groom-name');
+  const bn=document.getElementById('pbtn-bride-name');
+  if(!banner)return;
+  if(!isEditor()){banner.style.display='none';return;}
+  banner.style.display='flex';
+  if(gn)gn.textContent=state.name1||'신랑';
+  if(bn)bn.textContent=state.name2||'신부';
+  if(gb)gb.className='person-btn'+(currentUserPerson==='groom'?' active-groom':'');
+  if(bb)bb.className='person-btn'+(currentUserPerson==='bride'?' active-bride':'');
+}
+function renderLastEdit(){
+  const el=document.getElementById('last-edit-bar');if(!el)return;
+  const le=state.lastEdit;
+  if(!le||!le.time){el.textContent='';return;}
+  const t=new Date(le.time);
+  const now=new Date();
+  const diff=Math.round((now-t)/60000);
+  const timeStr=diff<1?'방금':diff<60?`${diff}분 전`:`${Math.floor(diff/60)}시간 전`;
+  const icon=le.person==='groom'?'🤵':le.person==='bride'?'👰':'✏️';
+  el.textContent=`마지막 수정: ${icon} ${le.name||'편집자'} · ${timeStr}`;
+  el.className='last-edit-bar '+(le.person||'');
+}
+
+// ════════ INLINE AMOUNT EDIT ════════
+window.startInlineEdit=function(id){
+  if(!isEditor())return;
+  const bi=(state.budgetItems||[]).find(b=>b.id===id);if(!bi)return;
+  const el=document.getElementById('biamt-'+id);if(!el)return;
+  el.innerHTML=`<input class="bi-amt-input" type="number" value="${bi.amt||0}"
+    onblur="saveInlineEdit(${id},this.value)"
+    onkeydown="if(event.key==='Enter')this.blur();if(event.key==='Escape')renderBudget()"
+    onclick="event.stopPropagation()">`;
+  setTimeout(()=>{const inp=el.querySelector('input');if(inp){inp.focus();inp.select();}},50);
+};
+window.saveInlineEdit=function(id,val){
+  const bi=(state.budgetItems||[]).find(b=>b.id===id);if(!bi)return;
+  bi.amt=parseInt(val)||0;
+  scheduleSave();renderBudget();renderPaymentSchedule();
+};
+
+// ════════ SETTLEMENT VIEW ════════
+let settlementOpen=false;
+window.toggleSettlement=function(){
+  settlementOpen=!settlementOpen;
+  const el=document.getElementById('settlement-content');
+  const arrow=document.getElementById('settle-toggle-arrow');
+  if(el)el.style.display=settlementOpen?'block':'none';
+  if(arrow)arrow.textContent=settlementOpen?'▲':'▼';
+  if(settlementOpen)renderSettlement();
+};
+let settleSortBy='cat'; // 'cat' | 'amt-desc' | 'amt-asc' | 'name'
+
+function renderSettlement(){
+  const el=document.getElementById('settlement-content');if(!el)return;
+  const items=state.budgetItems||[];
+
+  // build flat rows per person with cat info
+  const groups={groom:[],bride:[],both:[],unknown:[]};
+  items.forEach(bi=>{
+    if(!(bi.subs&&bi.subs.length)){
+      const g=bi.paidBy||'unknown';
+      if(!groups[g])groups[g]=[];
+      groups[g].push({name:bi.name,sub:null,amt:bi.amt||0,cat:bi.cat||'기타'});
+    } else {
+      bi.subs.forEach(s=>{
+        const g=s.paidBy||'unknown';
+        if(!groups[g])groups[g]=[];
+        groups[g].push({name:bi.name,sub:s.name,amt:s.amt||0,cat:bi.cat||'기타'});
+      });
+    }
+  });
+
+  const personInfo={
+    groom:{label:`🤵 ${state.name1||'신랑'}`,cls:'groom'},
+    bride:{label:`👰 ${state.name2||'신부'}`,cls:'bride'},
+    both:{label:'💑 공동',cls:'both'},
+    unknown:{label:'❓ 납부자 미지정',cls:'unknown'},
+  };
+
+  // sort bar HTML
+  const sortBar=`<div class="settle-sort-bar">
+    <span style="font-size:11px;color:var(--tl);font-family:'Noto Serif KR'">정렬:</span>
+    <button class="settle-sort-btn${settleSortBy==='cat'?' active':''}" onclick="setSettleSort('cat')">카테고리순</button>
+    <button class="settle-sort-btn${settleSortBy==='amt-desc'?' active':''}" onclick="setSettleSort('amt-desc')">금액 높은순</button>
+    <button class="settle-sort-btn${settleSortBy==='amt-asc'?' active':''}" onclick="setSettleSort('amt-asc')">금액 낮은순</button>
+    <button class="settle-sort-btn${settleSortBy==='name'?' active':''}" onclick="setSettleSort('name')">항목명순</button>
+  </div>`;
+
+  let html=sortBar;
+  let hasAny=false;
+
+  ['groom','bride','both','unknown'].forEach(p=>{
+    let rows=groups[p]||[];
+    if(!rows.length)return;
+    hasAny=true;
+    const total=rows.reduce((a,r)=>a+r.amt,0);
+    const info=personInfo[p];
+
+    // apply sort
+    if(settleSortBy==='amt-desc') rows=[...rows].sort((a,b)=>b.amt-a.amt);
+    else if(settleSortBy==='amt-asc') rows=[...rows].sort((a,b)=>a.amt-b.amt);
+    else if(settleSortBy==='name') rows=[...rows].sort((a,b)=>a.name.localeCompare(b.name));
+    else rows=[...rows].sort((a,b)=>a.cat.localeCompare(b.cat)); // cat sort
+
+    let rowsHtml='';
+    if(settleSortBy==='cat'){
+      // group by category
+      const catMap={};
+      rows.forEach(r=>{
+        if(!catMap[r.cat])catMap[r.cat]=[];
+        catMap[r.cat].push(r);
+      });
+      Object.entries(catMap).forEach(([cat,catRows])=>{
+        const catTotal=catRows.reduce((a,r)=>a+r.amt,0);
+        const catColor=CAT_COLORS[cat]||'#888';
+        rowsHtml+=`<div class="settle-cat-group">
+          <div class="settle-cat-label">
+            <span class="settle-cat-dot" style="background:${catColor}"></span>
+            ${cat}
+            <span class="settle-cat-subtotal">${catTotal.toLocaleString()}원</span>
+          </div>
+          ${catRows.map(r=>`<div class="settle-row">
+            <div class="settle-row-name">
+              <div>${r.name}</div>
+              ${r.sub?`<span class="settle-row-sub">└ ${r.sub}</span>`:''}
+            </div>
+            <span class="settle-row-amt">${r.amt.toLocaleString()}원</span>
+          </div>`).join('')}
+        </div>`;
+      });
+    } else {
+      rowsHtml=rows.map(r=>`<div class="settle-row">
+        <div class="settle-row-name">
+          <div>${r.name}${r.sub?`<span style="color:var(--tl)"> · ${r.sub}</span>`:''}</div>
+          <span class="settle-row-sub" style="color:${CAT_COLORS[r.cat]||'#888'}">${r.cat}</span>
+        </div>
+        <span class="settle-row-amt">${r.amt.toLocaleString()}원</span>
+      </div>`).join('');
+    }
+
+    html+=`<div class="settle-person">
+      <div class="settle-person-header ${info.cls}">
+        <span class="settle-person-name">${info.label}</span>
+        <span class="settle-person-total">${total.toLocaleString()}원</span>
+      </div>
+      ${rowsHtml}
+    </div>`;
+  });
+
+  if(!hasAny) html+=`<p style="font-size:13px;color:var(--tl);text-align:center;padding:12px">납부 내역이 없어요</p>`;
+  el.innerHTML=html;
+}
+
+window.setSettleSort=function(by){
+  settleSortBy=by;
+  renderSettlement();
+};
+
+// ════════ CATEGORY MANAGEMENT ════════
+function renderCatTags(){
+  const el=document.getElementById('cat-tags');if(!el)return;
+  const cats=state.budgetCats||[];
+  const ed=isEditor();
+  el.innerHTML=cats.map(c=>`
+    <span style="display:inline-flex;align-items:center;gap:4px;background:white;border:1px solid var(--rose-pale);border-radius:99px;padding:3px 10px;font-size:12px;color:var(--tm)">
+      ${c}
+      ${ed?`<button onclick="delBudgetCat('${c}')" style="background:none;border:none;cursor:pointer;color:var(--tl);font-size:14px;line-height:1;padding:0 2px">×</button>`:''}
+    </span>`).join('');
+  // rebuild select
+  const sel=document.getElementById('b-cat');
+  if(sel)sel.innerHTML=cats.map(c=>`<option>${c}</option>`).join('');
+  const catManage=document.getElementById('cat-manage-area');
+  if(catManage)catManage.style.display=ed?'block':'none';
+}
+window.addBudgetCat=function(){
+  const inp=document.getElementById('new-cat-input');
+  const name=inp?inp.value.trim():'';if(!name)return;
+  if(!state.budgetCats)state.budgetCats=[];
+  if(state.budgetCats.includes(name)){alert('이미 있는 카테고리예요');return;}
+  state.budgetCats.push(name);
+  inp.value='';
+  scheduleSave();renderCatTags();
+};
+window.delBudgetCat=function(cat){
+  if(!isEditor())return;
+  if(!confirm(`"${cat}" 카테고리를 삭제할까요?\n(해당 카테고리의 항목은 유지됩니다)`))return;
+  state.budgetCats=(state.budgetCats||[]).filter(c=>c!==cat);
+  scheduleSave();renderCatTags();
+};
+
 // ════════ BUDGET ════════
 function fmtAmt(n){return(n||0).toLocaleString()+'원';}
 function getBiTotal(bi){ return bi.amt||0; }
@@ -1239,6 +1504,10 @@ function renderBudget(){
   document.getElementById('budget-bar').style.width=pct+'%';
   renderBudgetGraph(items,total);
   renderBudgetItems(items);
+  renderCatTags();
+  renderLastEdit();
+  updatePersonBanner();
+  if(settlementOpen)renderSettlement();
   if(!isEditor()){const f=document.getElementById('budget-add-form');if(f)f.style.display='none';}
 }
 
@@ -1358,7 +1627,7 @@ function renderBudgetItems(items){
           ${unpaidBadgesHtml}
         </div>
         <div style="text-align:right;flex-shrink:0">
-          <div class="bi-amt">${contractAmt.toLocaleString()}<span class="aunit">원</span></div>
+          <div class="bi-amt bi-amt-inline" id="biamt-${bi.id}" onclick="event.stopPropagation();startInlineEdit(${bi.id})" title="클릭하여 수정">${contractAmt.toLocaleString()}<span class="aunit">원</span>${ed&&!(bi.subs&&bi.subs.length)?'<span style="font-size:9px;color:var(--tl);display:block">탭하여 수정</span>':''}</div>
           ${progressHtml}
         </div>
         ${fullyPaid?`<span class="bi-fully-paid-badge">✓ 완납</span>`:''}

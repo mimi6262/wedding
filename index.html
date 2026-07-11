@@ -374,7 +374,7 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
 .admin-logout-btn:hover{background:var(--rose-blush);color:var(--rose-deep)}
 
 /* BOTTOM NAV */
-.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(253,240,241,.96);backdrop-filter:blur(16px);border-top:1px solid var(--rose-pale);padding:8px 0 max(8px,env(safe-area-inset-bottom));grid-template-columns:repeat(5,1fr)}
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(253,240,241,.96);backdrop-filter:blur(16px);border-top:1px solid var(--rose-pale);padding:8px 0 max(8px,env(safe-area-inset-bottom));grid-template-columns:repeat(6,1fr)}
 .bnav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;padding:6px 4px;color:var(--tl);transition:color .2s;min-height:52px;justify-content:center;-webkit-tap-highlight-color:transparent}
 .bnav-btn .bicon{font-size:18px;line-height:1}
 .bnav-btn .blbl{font-size:9px;font-family:'Noto Serif KR';letter-spacing:.5px}
@@ -408,6 +408,50 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
   .access-code-display{font-size:32px;letter-spacing:6px}
 }
 @media(max-width:360px){.dday-number{font-size:52px}.app-title{font-size:24px}.stat-num{font-size:20px}}
+
+/* GUESTS */
+.gside-tabs{display:flex;gap:8px;margin-bottom:14px}
+.gside-tab{flex:1;padding:11px 4px;border-radius:14px;border:1.5px solid var(--rose-pale);background:white;cursor:pointer;font-family:'Noto Serif KR';font-size:13px;color:var(--tm);transition:all .2s;letter-spacing:.5px}
+.gside-tab.groom.active{background:#5B7FA6;border-color:#5B7FA6;color:white}
+.gside-tab.bride.active{background:var(--rose);border-color:var(--rose);color:white}
+.gside-tab.all.active{background:var(--gold);border-color:var(--gold);color:white}
+.gstat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
+.gstat{background:white;border-radius:14px;padding:12px 14px;box-shadow:var(--sh)}
+.gstat-label{font-size:11px;color:var(--tl);font-family:'Noto Serif KR';letter-spacing:.5px;margin-bottom:4px}
+.gstat-num{font-size:21px;color:var(--rose-deep);font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.2}
+.gstat-sub{font-size:11px;color:var(--tl);margin-top:3px}
+.grow{background:var(--ivory);border-radius:12px;padding:10px;margin-bottom:8px}
+.grow input,.grow select{font-size:13px;padding:7px 8px;border:1px solid var(--rose-pale);border-radius:8px;background:white;color:var(--td);font-family:'Noto Sans KR';outline:none;width:100%;transition:border-color .2s}
+.grow input:focus,.grow select:focus{border-color:var(--rose-light)}
+.grow-l1{display:grid;grid-template-columns:1fr 1.1fr 24px;gap:6px;margin-bottom:6px;align-items:end}
+.grow-l2{display:grid;grid-template-columns:1.1fr 58px 58px 1.2fr;gap:6px;margin-bottom:6px}
+.gfl{font-size:10px;color:var(--tl);margin-bottom:3px;font-family:'Noto Serif KR';letter-spacing:.5px}
+.gdel{background:none;border:none;color:var(--tl);font-size:17px;cursor:pointer;padding:0 0 8px;line-height:1}
+.gdel:hover{color:#C62828}
+select.attend-yes{color:#3E7D46;border-color:#BFDCC4;background:#F0F8F1}
+select.attend-no{color:#9A9A9A;background:#F4F4F4}
+select.attend-tbd{color:#A67C1C;border-color:#EAD9AE;background:#FBF6E8}
+.gmeal-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:7px 0;color:var(--tm)}
+.gmeal-row.total{border-top:1px solid var(--rose-pale);font-family:'Noto Serif KR';color:var(--rose-deep);font-weight:500;font-size:14px;margin-top:4px;padding-top:11px}
+.gprice-inp{width:86px;font-size:13px;padding:6px 8px;border:1px solid var(--rose-pale);border-radius:8px;background:white;color:var(--td);font-family:'Noto Sans KR';outline:none;text-align:right}
+.gcmp-table{width:100%;border-collapse:collapse;font-size:13px}
+.gcmp-table th{font-size:11px;color:var(--tl);font-family:'Noto Serif KR';font-weight:400;padding:6px 4px;border-bottom:1px solid var(--rose-pale);text-align:center}
+.gcmp-table td{padding:9px 4px;text-align:center;color:var(--tm);border-bottom:1px dashed var(--rose-pale)}
+.gcmp-table tr.gcmp-sum td{border-bottom:none;font-family:'Noto Serif KR';color:var(--rose-deep);font-weight:500}
+.gbar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:12px;color:var(--tm)}
+.gbar-name{width:86px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gbar-track{flex:1;height:8px;background:var(--rose-blush);border-radius:4px;overflow:hidden}
+.gbar-fill{height:8px;background:var(--rose-light);border-radius:4px}
+.gbar-num{width:26px;text-align:right;flex-shrink:0;color:var(--td)}
+.guest-add-row{display:flex;gap:6px}
+.guest-add-row input{flex:1.2;font-size:13px;padding:9px 12px;border-radius:10px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR';color:var(--td)}
+.guest-add-row select{flex:1;font-size:13px;padding:9px 10px;border-radius:10px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR';color:var(--td)}
+@media(max-width:520px){
+  .guest-add-row{flex-direction:column;gap:8px}
+  .guest-add-row input,.guest-add-row select{width:100%;font-size:16px;padding:12px 14px;min-height:44px}
+  .guest-add-row .add-btn{width:100%;min-height:48px;font-size:15px}
+  .grow input,.grow select{font-size:16px;min-height:42px;padding:8px}
+}
 </style>
 </head>
 <body>
@@ -470,14 +514,16 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
   <button class="nav-btn" onclick="showPage('budget')">예산</button>
   <button class="nav-btn" onclick="showPage('contacts')">📞 연락처</button>
   <button class="nav-btn" onclick="showPage('calendar')">일정</button>
+  <button class="nav-btn" onclick="showPage('guests')">💐 하객</button>
   <button class="nav-btn admin-btn" id="admin-nav-btn" onclick="showPage('admin')" style="display:none">⚙ 관리</button>
 </nav>
-<div class="bottom-nav" style="grid-template-columns:repeat(5,1fr)">
+<div class="bottom-nav" style="grid-template-columns:repeat(6,1fr)">
   <button class="bnav-btn active" onclick="showPage('dday')"><span class="bicon">💍</span><span class="blbl">D-day</span></button>
   <button class="bnav-btn" onclick="showPage('checklist')"><span class="bicon">✅</span><span class="blbl">체크리스트</span></button>
   <button class="bnav-btn" onclick="showPage('budget')"><span class="bicon">💰</span><span class="blbl">예산</span></button>
   <button class="bnav-btn" onclick="showPage('contacts')"><span class="bicon">📞</span><span class="blbl">연락처</span></button>
   <button class="bnav-btn" onclick="showPage('calendar')"><span class="bicon">📅</span><span class="blbl">일정</span></button>
+  <button class="bnav-btn" onclick="showPage('guests')"><span class="bicon">💐</span><span class="blbl">하객</span></button>
 </div>
 
 <main>
@@ -640,6 +686,50 @@ main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px
     </div>
     <input id="ca-memo" type="text" placeholder="메모 (업무시간, 휴무일 등)" style="width:100%;font-size:13px;padding:9px 12px;border-radius:10px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR';color:var(--td);margin-bottom:8px">
     <button class="add-btn" style="width:100%" onclick="addContact()">연락처 추가</button>
+  </div>
+</div>
+
+<!-- GUESTS -->
+<div id="page-guests" class="page">
+  <p class="section-intro">💐 예상 하객 💐</p>
+  <div class="gside-tabs">
+    <button class="gside-tab groom active" id="gtab-groom" onclick="setGuestSide('groom')">🤵 신랑측</button>
+    <button class="gside-tab bride" id="gtab-bride" onclick="setGuestSide('bride')">👰 신부측</button>
+    <button class="gside-tab all" id="gtab-all" onclick="setGuestSide('all')">💑 전체 합계</button>
+  </div>
+  <div class="gstat-grid" id="guest-stats"></div>
+  <div class="card" id="guest-list-card">
+    <div class="card-title" id="guest-list-title">✦ 하객 리스트</div>
+    <div id="guest-rows"></div>
+    <div id="guest-add-area">
+      <div class="floral-divider">· · ·</div>
+      <div class="budget-input-label">새 하객 추가</div>
+      <div class="guest-add-row">
+        <input id="ng-name" type="text" placeholder="성명 (예: 김OO)">
+        <select id="ng-rel"></select>
+        <button class="add-btn" onclick="addGuest()">추가</button>
+      </div>
+    </div>
+  </div>
+  <div class="card" id="guest-all-card" style="display:none">
+    <div class="card-title">✦ 양가 하객 비교</div>
+    <div id="guest-cmp-body"></div>
+    <div style="margin-top:18px">
+      <div style="font-size:11px;color:var(--tl);margin-bottom:10px;font-family:'Noto Serif KR';letter-spacing:1px">관계별 참석 인원 (양가 합산)</div>
+      <div id="guest-rel-bars"></div>
+    </div>
+  </div>
+  <div class="card" id="guest-meal-card">
+    <div class="card-title">✦ 식대 계산</div>
+    <div id="guest-meal-body"></div>
+  </div>
+  <div class="card" id="guest-rel-card">
+    <div style="font-size:11px;color:var(--tl);margin-bottom:8px;font-family:'Noto Serif KR';letter-spacing:1px">관계 종류 관리</div>
+    <div id="grel-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px"></div>
+    <div style="display:flex;gap:6px">
+      <input id="new-grel-input" type="text" placeholder="새 관계명 (예: 동호회)" style="flex:1;font-size:13px;padding:7px 10px;border-radius:8px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR'">
+      <button class="add-btn sm" onclick="addGuestRel()">추가</button>
+    </div>
   </div>
 </div>
 
@@ -822,6 +912,11 @@ async function saveNotices(){
 function defaultState(){
   return{
     weddingDate:'',name1:'신랑',name2:'신부',budgetTotal:0,
+    guests:{
+      mealAdult:50000,mealChild:30000,
+      relations:['가족 및 친척','친구','회사 및 지인','아버지 하객','어머니 하객'],
+      groomList:[],brideList:[]
+    },
     budgetCats:['스드메','예복','예물','본식','혼주','혼수','기타'],
     budgetItems:[],
     manualEvents:[
@@ -870,6 +965,21 @@ function defaultState(){
 function ensureDefaults(){
   const def=defaultState();
   Object.keys(def).forEach(k=>{if(!(k in state))state[k]=def[k];});
+  if(!state.guests)state.guests=def.guests;
+  if(!('mealAdult' in state.guests))state.guests.mealAdult=50000;
+  if(!('mealChild' in state.guests))state.guests.mealChild=30000;
+  if(!state.guests.relations||!state.guests.relations.length)state.guests.relations=def.guests.relations.slice();
+  if(!state.guests.groomList)state.guests.groomList=[];
+  if(!state.guests.brideList)state.guests.brideList=[];
+  ['groomList','brideList'].forEach(k=>(state.guests[k]||[]).forEach(g=>{
+    if(!('name' in g))g.name='';
+    if(!g.relation)g.relation=state.guests.relations[0]||'기타';
+    if(!g.attend)g.attend='tbd';
+    if(!('adult' in g))g.adult=1;
+    if(!('child' in g))g.child=0;
+    if(!g.invite)g.invite='mobile';
+    if(!('memo' in g))g.memo='';
+  }));
   if(!state.notices)state.notices=def.notices;
   if(!state.contacts)state.contacts=[];
   if(!state.budgetCats||!state.budgetCats.length)state.budgetCats=['스드메','예복','예물','본식','혼주','혼수','기타'];
@@ -902,24 +1012,25 @@ function renderAll(){
   document.getElementById('name2').value=state.name2||'신부';
   if(state.weddingDate)document.getElementById('wedding-date-input').value=state.weddingDate;
   if(state.budgetTotal)document.getElementById('budget-total-input').value=state.budgetTotal;
-  calcDday(state.weddingDate); renderOverview(); renderPaymentSchedule(); renderNotices(); renderChecklist(); renderBudget(); renderCalendar();
+  calcDday(state.weddingDate); renderOverview(); renderPaymentSchedule(); renderNotices(); renderChecklist(); renderBudget(); renderCalendar(); renderGuests();
   renderLastEdit(); updatePersonBanner();
   ['add-section-btn','budget-add-form','event-add-area'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=isEditor()?'':'none';});
 }
 
 // ════════ NAV ════════
-const PAGES=['dday','checklist','budget','contacts','calendar','admin'];
+const PAGES=['dday','checklist','budget','contacts','calendar','guests','admin'];
 window.showPage=function(id){
   PAGES.forEach(p=>{const el=document.getElementById('page-'+p);if(el)el.classList.remove('active');});
   document.querySelectorAll('.nav-btn,.bnav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   const idx=PAGES.indexOf(id);
   document.querySelectorAll('.nav-btn')[idx]?.classList.add('active');
-  document.querySelectorAll('.bnav-btn')[Math.min(idx,4)]?.classList.add('active');
+  document.querySelectorAll('.bnav-btn')[Math.min(idx,5)]?.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
   if(id==='admin')renderAdmin();
   if(id==='calendar')renderCalendar();
   if(id==='contacts')renderContacts();
+  if(id==='guests')renderGuests();
 };
 
 // ════════ D-DAY ════════
@@ -1955,6 +2066,169 @@ window.addEvent=function(){if(!isEditor())return;const date=document.getElementB
 window.delEvent=function(id){if(!isEditor())return;state.manualEvents=state.manualEvents.filter(e=>e.id!==id);scheduleSave();renderCalendar();};
 
 // ════════ ADMIN ════════
+// ════════ GUESTS ════════
+let guestSide=sessionStorage.getItem('guestSide')||'groom';
+const gesc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const fmtWon=n=>'₩'+(n||0).toLocaleString();
+function gCalc(list){
+  const r={adult:0,child:0,yes:0,no:0,tbd:0,paper:0,mobile:0,total:list.length};
+  list.forEach(g=>{
+    if(g.attend==='yes'){r.yes++;r.adult+=Math.max(0,parseInt(g.adult)||0);r.child+=Math.max(0,parseInt(g.child)||0);}
+    else if(g.attend==='no')r.no++;
+    else r.tbd++;
+    if(g.invite==='paper'||g.invite==='both')r.paper++;
+    if(g.invite==='mobile'||g.invite==='both')r.mobile++;
+  });
+  return r;
+}
+window.setGuestSide=function(s){guestSide=s;sessionStorage.setItem('guestSide',s);renderGuests();};
+function renderGuests(){
+  if(!state.guests||!document.getElementById('page-guests'))return;
+  const ed=isEditor(), G=state.guests;
+  const gName=state.name1||'신랑', bName=state.name2||'신부';
+  document.getElementById('gtab-groom').innerHTML='🤵 '+gesc(gName)+'측';
+  document.getElementById('gtab-bride').innerHTML='👰 '+gesc(bName)+'측';
+  ['groom','bride','all'].forEach(s=>{const b=document.getElementById('gtab-'+s);if(b)b.classList.toggle('active',guestSide===s);});
+  const mA=Math.max(0,parseInt(G.mealAdult)||0), mC=Math.max(0,parseInt(G.mealChild)||0);
+  const cG=gCalc(G.groomList||[]), cB=gCalc(G.brideList||[]);
+  const isAll=guestSide==='all';
+  const c=isAll?{adult:cG.adult+cB.adult,child:cG.child+cB.child,yes:cG.yes+cB.yes,no:cG.no+cB.no,tbd:cG.tbd+cB.tbd,paper:cG.paper+cB.paper,mobile:cG.mobile+cB.mobile,total:cG.total+cB.total}:(guestSide==='groom'?cG:cB);
+  const meal=c.adult*mA+c.child*mC;
+  // 대시보드
+  document.getElementById('guest-stats').innerHTML=`
+    <div class="gstat"><div class="gstat-label">참석 인원</div><div class="gstat-num">${c.adult+c.child}<span style="font-size:13px">명</span></div><div class="gstat-sub">대인 ${c.adult} · 소인 ${c.child}</div></div>
+    <div class="gstat"><div class="gstat-label">미정 / 미참석</div><div class="gstat-num">${c.tbd}<span style="font-size:13px"> / </span>${c.no}</div><div class="gstat-sub">전체 ${c.total}팀 · 참석 ${c.yes}팀</div></div>
+    <div class="gstat"><div class="gstat-label">청첩장 필요</div><div class="gstat-num">${c.paper}<span style="font-size:13px">부</span></div><div class="gstat-sub">종이 ${c.paper} · 모바일 ${c.mobile}</div></div>
+    <div class="gstat"><div class="gstat-label">예상 식대</div><div class="gstat-num" style="font-size:19px">${fmtWon(meal)}</div><div class="gstat-sub">참석 인원 기준</div></div>`;
+  // 리스트 / 전체 비교 전환
+  document.getElementById('guest-list-card').style.display=isAll?'none':'block';
+  document.getElementById('guest-all-card').style.display=isAll?'block':'none';
+  document.getElementById('guest-rel-card').style.display=(isAll||!ed)?'none':'block';
+  if(isAll){
+    const mealG=cG.adult*mA+cG.child*mC, mealB=cB.adult*mA+cB.child*mC;
+    document.getElementById('guest-cmp-body').innerHTML=`
+      <table class="gcmp-table">
+        <tr><th style="text-align:left">구분</th><th>대인</th><th>소인</th><th>참석계</th><th>미정</th><th>예상 식대</th></tr>
+        <tr><td style="text-align:left;color:#5B7FA6;font-weight:500">🤵 ${gesc(gName)}측</td><td>${cG.adult}</td><td>${cG.child}</td><td>${cG.adult+cG.child}명</td><td>${cG.tbd}</td><td>${fmtWon(mealG)}</td></tr>
+        <tr><td style="text-align:left;color:var(--rose);font-weight:500">👰 ${gesc(bName)}측</td><td>${cB.adult}</td><td>${cB.child}</td><td>${cB.adult+cB.child}명</td><td>${cB.tbd}</td><td>${fmtWon(mealB)}</td></tr>
+        <tr class="gcmp-sum"><td style="text-align:left">합계</td><td>${c.adult}</td><td>${c.child}</td><td>${c.adult+c.child}명</td><td>${c.tbd}</td><td>${fmtWon(meal)}</td></tr>
+      </table>`;
+    const relMap={};
+    [...(G.groomList||[]),...(G.brideList||[])].forEach(g=>{
+      if(g.attend!=='yes')return;
+      const n=(Math.max(0,parseInt(g.adult)||0))+(Math.max(0,parseInt(g.child)||0));
+      relMap[g.relation||'기타']=(relMap[g.relation||'기타']||0)+n;
+    });
+    const entries=Object.entries(relMap).sort((a,b)=>b[1]-a[1]);
+    const mx=Math.max(1,...entries.map(e=>e[1]));
+    document.getElementById('guest-rel-bars').innerHTML=entries.length?entries.map(([r,n])=>`
+      <div class="gbar-row"><span class="gbar-name">${gesc(r)}</span><div class="gbar-track"><div class="gbar-fill" style="width:${Math.round(n/mx*100)}%"></div></div><span class="gbar-num">${n}</span></div>`).join('')
+      :'<p style="font-size:12px;color:var(--tl);text-align:center;padding:8px 0">아직 참석 확정 하객이 없어요</p>';
+  }else{
+    const sideKey=guestSide==='groom'?'groomList':'brideList';
+    const list=G[sideKey]||[];
+    document.getElementById('guest-list-title').innerHTML='✦ '+(guestSide==='groom'?'🤵 '+gesc(gName):'👰 '+gesc(bName))+'측 하객 리스트 <span style="font-size:12px;color:var(--tl)">('+list.length+'팀)</span>';
+    const dis=ed?'':'disabled';
+    const rows=document.getElementById('guest-rows');
+    rows.innerHTML=list.length?list.map(g=>{
+      const relOpts=[...new Set([...(G.relations||[]),g.relation].filter(Boolean))];
+      return `<div class="grow">
+        <div class="grow-l1">
+          <div><div class="gfl">성명</div><input type="text" value="${gesc(g.name)}" placeholder="성명" ${dis} onchange="updGuest('${sideKey}','${g.id}','name',this.value)"></div>
+          <div><div class="gfl">관계</div><select ${dis} onchange="updGuest('${sideKey}','${g.id}','relation',this.value)">${relOpts.map(r=>`<option value="${gesc(r)}"${r===g.relation?' selected':''}>${gesc(r)}</option>`).join('')}</select></div>
+          ${ed?`<button class="gdel" onclick="delGuest('${sideKey}','${g.id}')" title="삭제">×</button>`:'<span></span>'}
+        </div>
+        <div class="grow-l2">
+          <div><div class="gfl">참석 여부</div><select class="attend-${g.attend}" ${dis} onchange="updGuest('${sideKey}','${g.id}','attend',this.value)">
+            <option value="yes"${g.attend==='yes'?' selected':''}>참석</option>
+            <option value="tbd"${g.attend==='tbd'?' selected':''}>미정</option>
+            <option value="no"${g.attend==='no'?' selected':''}>미참석</option>
+          </select></div>
+          <div><div class="gfl">대인</div><input type="number" min="0" value="${Math.max(0,parseInt(g.adult)||0)}" ${dis} onchange="updGuest('${sideKey}','${g.id}','adult',this.value)"></div>
+          <div><div class="gfl">소인</div><input type="number" min="0" value="${Math.max(0,parseInt(g.child)||0)}" ${dis} onchange="updGuest('${sideKey}','${g.id}','child',this.value)"></div>
+          <div><div class="gfl">청첩장</div><select ${dis} onchange="updGuest('${sideKey}','${g.id}','invite',this.value)">
+            <option value="none"${g.invite==='none'?' selected':''}>없음</option>
+            <option value="paper"${g.invite==='paper'?' selected':''}>종이</option>
+            <option value="mobile"${g.invite==='mobile'?' selected':''}>모바일</option>
+            <option value="both"${g.invite==='both'?' selected':''}>둘 다</option>
+          </select></div>
+        </div>
+        <input type="text" value="${gesc(g.memo||'')}" placeholder="비고 (선택)" ${dis} onchange="updGuest('${sideKey}','${g.id}','memo',this.value)">
+      </div>`;
+    }).join(''):'<p style="font-size:13px;color:var(--tl);text-align:center;padding:14px 0">아직 등록된 하객이 없어요.<br>아래에서 첫 하객을 추가해보세요 🌷</p>';
+    document.getElementById('guest-add-area').style.display=ed?'':'none';
+    const sel=document.getElementById('ng-rel');
+    if(sel)sel.innerHTML=(G.relations||[]).map(r=>`<option value="${gesc(r)}">${gesc(r)}</option>`).join('');
+  }
+  // 식대 계산 카드
+  const priceRow=ed
+    ?`<div class="gmeal-row"><span>1인 식대 단가 (양가 공통)</span><span style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end">대인 <input class="gprice-inp" type="number" min="0" step="1000" value="${mA}" onchange="updGuestMeal('mealAdult',this.value)"> · 소인 <input class="gprice-inp" type="number" min="0" step="1000" value="${mC}" onchange="updGuestMeal('mealChild',this.value)"></span></div>`
+    :`<div class="gmeal-row"><span>1인 식대 단가 (양가 공통)</span><span>대인 ${mA.toLocaleString()}원 · 소인 ${mC.toLocaleString()}원</span></div>`;
+  document.getElementById('guest-meal-body').innerHTML=priceRow+`
+    <div class="gmeal-row"><span>대인 ${mA.toLocaleString()}원 × ${c.adult}명</span><span>${(mA*c.adult).toLocaleString()}원</span></div>
+    <div class="gmeal-row"><span>소인 ${mC.toLocaleString()}원 × ${c.child}명</span><span>${(mC*c.child).toLocaleString()}원</span></div>
+    <div class="gmeal-row total"><span>예상 식대 합계${isAll?' (양가)':''}</span><span>${fmtWon(meal)}</span></div>
+    <p style="font-size:11px;color:var(--tl);margin-top:8px;line-height:1.6">* 참석 확정 인원만 계산돼요. 웨딩홀 보증인원 협의 시 참고용입니다.</p>`;
+  // 관계 종류 태그
+  if(ed&&!isAll){
+    document.getElementById('grel-tags').innerHTML=(G.relations||[]).map((r,ri)=>`
+      <span style="display:inline-flex;align-items:center;gap:4px;background:white;border:1px solid var(--rose-pale);border-radius:99px;padding:4px 10px;font-size:12px;color:var(--tm)">${gesc(r)}
+        <button onclick="delGuestRel(${ri})" style="background:none;border:none;cursor:pointer;color:var(--tl);font-size:14px;line-height:1;padding:0 2px">×</button>
+      </span>`).join('');
+  }
+}
+window.updGuest=function(sideKey,id,field,val){
+  if(!isEditor())return;
+  const g=(state.guests[sideKey]||[]).find(x=>x.id===id);if(!g)return;
+  if(field==='adult'||field==='child')g[field]=Math.max(0,parseInt(val)||0);
+  else g[field]=val;
+  scheduleSave();renderGuests();
+};
+window.delGuest=function(sideKey,id){
+  if(!isEditor())return;
+  const g=(state.guests[sideKey]||[]).find(x=>x.id===id);
+  if(!confirm(`"${(g&&g.name)||'이 하객'}" 항목을 삭제할까요?`))return;
+  state.guests[sideKey]=(state.guests[sideKey]||[]).filter(x=>x.id!==id);
+  scheduleSave();renderGuests();
+};
+window.addGuest=function(){
+  if(!isEditor())return;
+  if(guestSide==='all')return;
+  const ni=document.getElementById('ng-name'), rs=document.getElementById('ng-rel');
+  const name=ni.value.trim();
+  if(!name){alert('성명을 입력해주세요');ni.focus();return;}
+  const sideKey=guestSide==='groom'?'groomList':'brideList';
+  (state.guests[sideKey]=state.guests[sideKey]||[]).push({
+    id:'g'+Date.now(),name,relation:rs.value||(state.guests.relations[0]||'기타'),
+    attend:'tbd',adult:1,child:0,invite:'mobile',memo:''
+  });
+  ni.value='';
+  scheduleSave();renderGuests();
+};
+window.updGuestMeal=function(k,val){
+  if(!isEditor())return;
+  state.guests[k]=Math.max(0,parseInt(val)||0);
+  scheduleSave();renderGuests();
+};
+window.addGuestRel=function(){
+  if(!isEditor())return;
+  const inp=document.getElementById('new-grel-input');
+  const name=inp?inp.value.trim():'';if(!name)return;
+  if(!state.guests.relations)state.guests.relations=[];
+  if(state.guests.relations.includes(name)){alert('이미 있는 관계예요');return;}
+  state.guests.relations.push(name);
+  inp.value='';
+  scheduleSave();renderGuests();
+};
+window.delGuestRel=function(ri){
+  if(!isEditor())return;
+  const rel=(state.guests.relations||[])[ri];
+  if(rel===undefined)return;
+  if(!confirm(`"${rel}" 관계를 삭제할까요?\n(해당 관계로 등록된 하객은 유지됩니다)`))return;
+  state.guests.relations.splice(ri,1);
+  scheduleSave();renderGuests();
+};
+
 async function renderAdmin(){
   if(!isEditor())return;
   try{

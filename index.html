@@ -571,6 +571,128 @@ details#guest-rel-card summary{cursor:pointer;font-size:12px;color:var(--tl);fon
   .gsearch{font-size:16px}
   .ci-actions{margin-left:0}
 }
+
+/* ── 2026-10 리뉴얼 1차: 탭 5개 · 얇은 상단 줄 · 홈 · + 버튼 ── */
+main{padding:12px 14px calc(110px + env(safe-area-inset-bottom))}
+#topbar{position:sticky;top:0;z-index:150;display:flex;align-items:center;gap:8px;height:48px;padding:0 14px;padding-top:env(safe-area-inset-top);box-sizing:content-box;background:rgba(253,248,242,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--rose-pale)}
+#tb-back{background:none;border:none;font-size:26px;line-height:1;color:var(--rose-deep);cursor:pointer;padding:0 8px 2px 0;margin-left:-4px}
+#tb-title{flex:1;min-width:0;font-family:'Noto Serif KR',serif;font-size:16px;font-weight:500;color:var(--td);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.on-home #tb-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;font-weight:400;color:var(--rose-deep)}
+#tb-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+#tb-dday{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--rose-deep)}
+body.on-home #tb-dday{display:none}
+#sync-status{position:static;display:none;align-items:center;gap:5px;font-size:11px;color:var(--tl);background:none;padding:0}
+#viewer-banner{position:static;padding:7px;font-size:12px}
+/* 아래 탭 */
+.bottom-nav{display:grid!important;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:760px;z-index:200;padding:4px 0 max(6px,env(safe-area-inset-bottom))}
+.bnav-btn{min-height:52px}
+.bnav-btn .bicon{font-size:19px}
+.bnav-btn .blbl{font-size:11px}
+.bnav-btn.active .blbl{font-weight:500}
+#fab{align-items:center;justify-content:center;position:fixed;z-index:210;right:max(16px,calc(50% - 380px + 16px));bottom:calc(76px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;border:none;background:var(--rose);color:white;font-size:30px;line-height:1;cursor:pointer;box-shadow:0 6px 18px rgba(155,78,85,.35);display:none}
+#fab:active{transform:scale(.95)}
+/* 홈 */
+.hero{text-align:center;padding:14px 10px 16px;margin-bottom:12px;border-radius:20px;background:linear-gradient(135deg,var(--rose-deep) 0%,var(--rose) 55%,var(--rose-light) 100%);color:white}
+.hero-names{display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Cormorant Garamond',serif;font-size:17px}
+.hero-names input{width:96px;background:transparent;border:none;border-bottom:1px dashed rgba(255,255,255,.5);color:white;text-align:center;font-family:'Noto Serif KR',serif;font-size:15px;outline:none;padding:2px 0}
+.hero-names input[readonly]{border-bottom-color:transparent}
+.hero-dday{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;line-height:1.05;margin-top:4px}
+.hero-sub{font-size:13px;opacity:.9;font-family:'Noto Serif KR'}
+.hero-date{position:relative;display:inline-block;margin-top:8px;font-size:12px;padding:5px 12px;border-radius:99px;background:rgba(255,255,255,.18);cursor:pointer}
+.hero-date input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+.hero-date input:disabled{cursor:default}
+.hcard{background:white;border:1px solid rgba(201,114,122,.14);border-radius:16px;padding:12px 14px;margin-bottom:10px;box-shadow:var(--sh)}
+.hcard-h{display:flex;justify-content:space-between;align-items:center;font-family:'Noto Serif KR',serif;font-size:14px;font-weight:500;color:var(--rose-deep);margin-bottom:6px;cursor:pointer}
+.hcard-r{font-family:'Noto Sans KR';font-size:12px;font-weight:400;color:var(--tl)}
+.hrow{display:flex;align-items:center;gap:8px;min-height:40px;padding:4px 0;border-top:1px solid #F6EDEE;cursor:pointer}
+.hrow:first-of-type{border-top:none}
+.hrow-name{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hrow-name small{display:block;font-size:11px;color:var(--tl);overflow:hidden;text-overflow:ellipsis}
+.hdate{font-size:12px;color:var(--rose);white-space:nowrap;min-width:44px}
+.htag{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--ivory);color:var(--tl);white-space:nowrap;flex-shrink:0}
+.htag.soon{background:#FEF3E2;color:#B8730A}
+.htag.over{background:#FFEBEE;color:#C62828}
+.hempty{font-size:13px;color:var(--tl);text-align:center;padding:8px 0}
+.hmeter-row{display:flex;justify-content:space-between;font-size:12px;color:var(--tm);margin-top:8px;cursor:pointer}
+.hmeter{height:6px;border-radius:99px;background:var(--rose-pale);overflow:hidden;margin-top:4px}
+.hmeter div{height:100%;border-radius:99px}
+/* 탭 안 전환(목록/달력, 항목/납부/정산) */
+.seg-full{display:flex;width:100%;margin-bottom:12px}
+.seg-full button{flex:1;padding:9px 4px;font-size:13px}
+.view-help{font-size:12px;color:var(--tl);line-height:1.6;margin:0 2px 10px}
+/* 할 일 */
+.check-section{padding:12px 14px;margin-bottom:10px}
+.cs-header{cursor:pointer;margin-bottom:8px;gap:8px;min-height:32px}
+.cs-arrow{font-size:10px;color:var(--tl);transition:transform .2s;flex-shrink:0}
+.cs-arrow.open{transform:rotate(90deg)}
+.cs-title{flex:1;min-width:0;font-family:'Noto Serif KR',serif;font-size:14px;font-weight:500;color:var(--tm);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.check-section.folded .cs-bar{margin-bottom:6px}
+.cs-summary{font-size:12px;color:var(--tl);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cs-add{display:block;width:100%;margin-top:6px;padding:10px;border:1px dashed var(--rose-pale);border-radius:10px;background:none;color:var(--tl);font-size:13px;cursor:pointer;font-family:'Noto Sans KR'}
+.add-section-btn{padding:11px;font-size:13px}
+.cal-card{padding:14px}
+.sheet-ok{font-size:12px;color:#2E7D32;min-height:16px}
+/* 돈 */
+.msum{background:linear-gradient(135deg,#2A1A1C 0%,var(--rose-deep) 100%);color:white;border-radius:18px;padding:14px 16px;margin-bottom:12px}
+.msum-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;cursor:pointer}
+.msum-label{font-size:12px;opacity:.75}
+.msum-total{font-family:'Cormorant Garamond',serif;font-size:26px}
+.msum-bar{height:6px;background:rgba(255,255,255,.18);border-radius:99px;overflow:hidden;margin:8px 0 10px}
+.msum-bar div{height:100%;background:#F5D6D9;border-radius:99px}
+.msum-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;text-align:center}
+.msum-grid span{display:block;font-size:11px;opacity:.7}
+.msum-grid b{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500}
+.msum-people{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:center;font-size:11px;opacity:.85;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.15)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;margin:0 -14px;padding-left:14px;padding-right:14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;display:inline-flex;align-items:center;gap:5px;border:1px solid var(--rose-pale);background:white;border-radius:99px;padding:7px 12px;font-size:12px;color:var(--tm);cursor:pointer;font-family:'Noto Sans KR';white-space:nowrap}
+.chip i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.chip b{font-weight:500;color:var(--rose-deep)}
+.chip.on{background:var(--rose);border-color:var(--rose);color:white}
+.chip.on b{color:white}
+details.fold{padding:12px 14px}
+details.fold summary{cursor:pointer;font-size:13px;color:var(--tm);font-family:'Noto Serif KR'}
+details.fold summary span{font-family:'Noto Sans KR';color:var(--tl);font-size:12px}
+.fold-input{flex:1;min-width:0;font-size:14px;padding:8px 10px;border-radius:8px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR'}
+/* 하객 */
+.gstat-grid{grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.gstat{padding:9px 10px;border-radius:12px}
+.gstat-num{font-size:20px}
+.gstat-num small{font-size:12px;margin-left:1px}
+.gstat-sub{font-size:10px}
+.gside-tabs{margin-bottom:10px}
+.gside-tab{padding:9px 4px}
+#guest-list-card{margin-bottom:12px}
+.gsearch{margin-top:0}
+.stepper.big button{width:40px;height:40px;font-size:20px}
+.stepper.big span{min-width:30px;font-size:15px}
+/* 더보기 */
+.menu-list{background:white;border:1px solid var(--rose-pale);border-radius:16px;overflow:hidden;margin-bottom:12px}
+.menu-list button{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:54px;padding:0 16px;border:none;border-top:1px solid #F6EDEE;background:none;font-size:15px;color:var(--td);cursor:pointer;font-family:'Noto Sans KR';text-align:left}
+.menu-list button:first-child{border-top:none}
+.menu-r{color:var(--tl);display:flex;gap:6px;align-items:center}
+.menu-h{font-size:12px;color:var(--tl);margin-bottom:8px;font-family:'Noto Serif KR'}
+.sheet-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sheet-menu-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 4px;border:1px solid var(--rose-pale);border-radius:14px;background:var(--ivory);font-size:13px;color:var(--td);cursor:pointer;font-family:'Noto Sans KR'}
+.sheet-menu-btn span{font-size:24px}
+.mbtn[disabled]{opacity:.4;cursor:default}
+/* 휴대폰: 입력 창은 아래에서 올라오는 시트로 */
+@media(max-width:600px){
+  #modal-overlay{align-items:flex-end;padding:0}
+  .mbox{max-width:none;border-radius:20px 20px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));max-height:88vh;animation:sheetUp .22s ease}
+  .mbox h3{font-size:19px;margin-bottom:14px}
+  .mbox::before{content:'';display:block;width:40px;height:4px;border-radius:99px;background:var(--rose-pale);margin:-6px auto 12px}
+  .mfield input,.mfield select,.mfield textarea{font-size:16px}
+  .mbtn{padding:13px;font-size:14px}
+  .msum-total{font-size:22px}
+  .hero-dday{font-size:50px}
+}
+@keyframes sheetUp{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
+@media(max-width:360px){
+  .msum-grid b{font-size:15px}
+  .sheet-menu{grid-template-columns:repeat(2,1fr)}
+  .gstat-num{font-size:17px}
+}
 </style>
 </head>
 <body>
@@ -609,234 +731,110 @@ details#guest-rel-card summary{cursor:pointer;font-size:12px;color:var(--tl);fon
 </div>
 
 <!-- OVERLAYS -->
-<div id="role-badge"></div>
-<div id="sync-status"><span class="sdot" id="sdot"></span><span id="stxt">연결 중...</span></div>
 <div id="viewer-banner" style="display:flex;align-items:center;justify-content:center;gap:12px">
   <span>👁 보기 전용 모드입니다</span>
   <button onclick="doLogout()" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:6px;color:white;font-size:11px;padding:3px 10px;cursor:pointer;font-family:'Noto Serif KR';letter-spacing:.5px">로그아웃</button>
 </div>
 
-<!-- HEADER -->
-<header class="app-header">
-  <div class="deco-line"><span></span><span class="diamond"></span><span></span></div>
-  <div class="app-title">Our Wedding Planner</div>
-  <div class="app-subtitle">우리의 웨딩 플래너</div>
-  <div class="couple-names">
-    <input id="name1" type="text" value="신랑" maxlength="8"> &nbsp;♡&nbsp;
-    <input id="name2" type="text" value="신부" maxlength="8">
-  </div>
-</header>
-
-<nav>
-  <button class="nav-btn active" onclick="showPage('dday')">D-day</button>
-  <button class="nav-btn" onclick="showPage('checklist')">체크리스트</button>
-  <button class="nav-btn" onclick="showPage('budget')">예산</button>
-  <button class="nav-btn" onclick="showPage('contacts')">📞 연락처</button>
-  <button class="nav-btn" onclick="showPage('calendar')">일정</button>
-  <button class="nav-btn" onclick="showPage('guests')">💐 하객</button>
-  <button class="nav-btn admin-btn" id="admin-nav-btn" onclick="showPage('admin')" style="display:none">⚙ 관리</button>
-</nav>
-<div class="bottom-nav" style="grid-template-columns:repeat(6,1fr)">
-  <button class="bnav-btn active" onclick="showPage('dday')"><span class="bicon">💍</span><span class="blbl">D-day</span></button>
-  <button class="bnav-btn" onclick="showPage('checklist')"><span class="bicon">✅</span><span class="blbl">체크리스트</span></button>
-  <button class="bnav-btn" onclick="showPage('budget')"><span class="bicon">💰</span><span class="blbl">예산</span></button>
-  <button class="bnav-btn" onclick="showPage('contacts')"><span class="bicon">📞</span><span class="blbl">연락처</span></button>
-  <button class="bnav-btn" onclick="showPage('calendar')"><span class="bicon">📅</span><span class="blbl">일정</span></button>
-  <button class="bnav-btn" onclick="showPage('guests')"><span class="bicon">💐</span><span class="blbl">하객</span></button>
+<!-- 상단 줄: 모든 화면 공통(큰 제목은 홈에만) -->
+<div id="topbar">
+  <button id="tb-back" onclick="goBack()" aria-label="뒤로" style="display:none">‹</button>
+  <span id="tb-title">Our Wedding</span>
+  <span id="tb-right"><span id="tb-dday"></span><span id="sync-status" title="연결 상태"><span class="sdot" id="sdot"></span><span id="stxt"></span></span></span>
 </div>
+
+<!-- 아래 탭 5개 + 추가 버튼 -->
+<div class="bottom-nav" id="bottom-nav">
+  <button class="bnav-btn active" data-tab="home" onclick="showPage('home')"><span class="bicon">🏠</span><span class="blbl">홈</span></button>
+  <button class="bnav-btn" data-tab="todo" onclick="showPage('todo')"><span class="bicon">✅</span><span class="blbl">할 일</span></button>
+  <button class="bnav-btn" data-tab="money" onclick="showPage('money')"><span class="bicon">💰</span><span class="blbl">돈</span></button>
+  <button class="bnav-btn" data-tab="guests" onclick="showPage('guests')"><span class="bicon">💐</span><span class="blbl">하객</span></button>
+  <button class="bnav-btn" data-tab="more" onclick="showPage('more')"><span class="bicon">☰</span><span class="blbl">더보기</span></button>
+</div>
+<button id="fab" onclick="openFab()" aria-label="추가하기">+</button>
 
 <main>
-<!-- D-DAY -->
-<div id="page-dday" class="page active">
-  <div class="dday-hero">
-    <div class="dday-label">WEDDING DAY</div>
-    <div class="dday-number" id="dday-num">—</div>
-    <div class="dday-text" id="dday-text">결혼식까지 남은 날</div><br>
-    <input type="date" id="wedding-date-input" class="dday-date-input" oninput="onDateChange()">
-  </div>
-  <div class="dday-stats" style="grid-template-columns:repeat(2,1fr)">
-    <div class="stat-card"><div class="stat-num" id="stat-months">—</div><div class="stat-lbl">개월 남음</div></div>
-    <div class="stat-card"><div class="stat-num" id="stat-weeks">—</div><div class="stat-lbl">주 남음</div></div>
-  </div>
-
-  <!-- NOTICE BOARD -->
-  <div class="card" id="notice-board">
-    <div class="card-title">📣 공지사항</div>
-    <div id="notice-list"></div>
-    <div id="notice-add-form" style="margin-top:12px">
-      <input id="notice-title" type="text" placeholder="제목 (예: 안내 드립니다)" style="width:100%;font-size:13px;padding:9px 12px;border-radius:10px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR';color:var(--td);margin-bottom:8px">
-      <textarea id="notice-body" placeholder="공지 내용을 입력하세요..." style="width:100%;font-size:13px;padding:9px 12px;border-radius:10px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR';color:var(--td);resize:vertical;min-height:100px;line-height:1.6;margin-bottom:8px"></textarea>
-      <button class="add-btn" style="width:100%" onclick="addNotice()">공지 등록</button>
+<!-- 홈 -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-names">
+      <input id="name1" type="text" value="신랑" maxlength="8" aria-label="신랑 이름"><span>♡</span><input id="name2" type="text" value="신부" maxlength="8" aria-label="신부 이름">
     </div>
+    <div class="hero-dday" id="dday-num">—</div>
+    <div class="hero-sub" id="dday-text">결혼식 날짜를 골라 주세요</div>
+    <label class="hero-date"><span id="wedding-date-label">날짜 고르기</span><input type="date" id="wedding-date-input" oninput="onDateChange()" aria-label="결혼식 날짜"></label>
   </div>
-
-  <div class="card">
-    <div class="card-title">✦ 준비 현황</div>
-    <div id="overview-stats" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;"></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">💳 납부 일정</div>
-    <div id="payment-schedule"></div>
-  </div>
+  <div id="home-cards"></div>
 </div>
 
-<!-- CHECKLIST -->
-<div id="page-checklist" class="page">
-  <p class="section-intro">❀ 체크리스트 ❀</p>
-  <div id="checklist-container"></div>
-  <button class="add-section-btn" id="add-section-btn" onclick="addSection()">+ 새 카테고리 추가</button>
-</div>
-
-<!-- BUDGET -->
-<div id="page-budget" class="page">
-  <p class="section-intro">✦ 예산 관리 ✦</p>
-  <!-- 나는 누구 배너 (편집자만) -->
-  <div class="person-select-banner" id="person-banner" style="display:none">
-    <span style="font-size:12px;color:var(--tl);font-family:'Noto Serif KR'">지금 작업하는 사람:</span>
-    <button class="person-btn" id="pbtn-groom" onclick="selectPerson('groom')">🤵 <span id="pbtn-groom-name">신랑</span></button>
-    <button class="person-btn" id="pbtn-bride" onclick="selectPerson('bride')">👰 <span id="pbtn-bride-name">신부</span></button>
-    <span style="font-size:11px;color:var(--tl);margin-left:auto">선택하면 수정 이력에 기록돼요</span>
+<!-- 할 일 = 체크리스트 + 일정 -->
+<div id="page-todo" class="page">
+  <div class="seg seg-full" id="todo-seg">
+    <button data-v="list" onclick="setTodoView('list')">✅ 목록</button>
+    <button data-v="cal" onclick="setTodoView('cal')">📅 달력</button>
   </div>
-  <div class="last-edit-bar" id="last-edit-bar"></div>
-  <div class="budget-summary">
-    <div class="budget-total-label">총 예산</div>
-    <div class="budget-total-num" id="budget-total-display"><span>₩</span> 0</div>
-    <div style="margin-top:8px;display:flex;align-items:center;gap:8px;">
-      <input id="budget-total-input" type="number" inputmode="numeric" placeholder="총 예산 (원)" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 10px;font-size:13px;color:white;width:180px;outline:none;font-family:'Noto Sans KR';" oninput="updateBudgetTotal()">
-      <span style="font-size:12px;opacity:.7;">원</span>
-    </div>
-    <div class="amt-hint" id="bt-hint"></div>
-    <div class="budget-sub">
-      <div><div class="budget-sub-label">총 계약 금액</div><div class="budget-sub-num" id="budget-spent">₩0</div></div>
-      <div><div class="budget-sub-label" id="budget-remain-label">🟢 남은 예산</div><div class="budget-sub-num" id="budget-remain" style="color:#A8D8A8;font-size:26px">₩0</div></div>
-    </div>
-    <div style="margin-top:12px;padding:10px 14px;background:rgba(255,255,255,0.12);border-radius:10px;font-size:12px;opacity:0.85">
-      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-        <span>이미 낸 돈</span><span id="budget-paid">₩0</span>
+  <div id="todo-list">
+    <div id="checklist-container"></div>
+    <button class="add-section-btn" id="add-section-btn" onclick="addSection()">+ 새 카테고리</button>
+  </div>
+  <div id="todo-cal">
+    <div class="card cal-card">
+      <div class="cal-header">
+        <button class="cal-nav-btn" onclick="changeMonth(-1)" aria-label="이전 달">‹</button>
+        <div class="cal-title" id="cal-title" onclick="goToday()" title="눌러서 이번 달로"></div>
+        <button class="cal-nav-btn" onclick="changeMonth(1)" aria-label="다음 달">›</button>
       </div>
-      <div class="bp-row" id="budget-person-paid"></div>
-      <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.2);padding-top:6px;margin-top:4px">
-        <span>아직 안 낸 돈 (계약한 것 중)</span><span id="budget-remain2">₩0</span>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-legend">
+        <span><i style="background:var(--rose)"></i>직접 추가</span>
+        <span><i style="background:var(--gold)"></i>체크리스트</span>
+        <span><i style="background:#4C9A6A"></i>납부 예정</span>
+        <span><i style="background:var(--rose-deep)"></i>결혼식</span>
       </div>
     </div>
-  </div>
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-      <span style="font-size:13px;color:var(--tl);">카테고리별 지출</span>
-      <span style="font-size:13px;color:var(--rose);font-family:'Cormorant Garamond',serif;" id="budget-pct">0%</span>
-    </div>
-    <div class="budget-bar-wrap"><div class="budget-bar" id="budget-bar" style="width:0%"></div></div>
-    <div class="budget-graph" id="budget-graph"></div>
-  </div>
-  <!-- 정산 뷰 -->
-  <div class="card" id="settlement-card">
-    <div class="card-title" style="cursor:pointer" onclick="toggleSettlement()">
-      💸 정산 내역 <span id="settle-toggle-arrow" style="font-size:12px;color:var(--tl)">▼</span>
-    </div>
-    <div id="settlement-content" style="display:none"></div>
-  </div>
-  <div class="card">
-    <div class="card-title">✦ 지출 항목</div>
-    <div id="budget-filter-badge" style="display:none"></div>
-    <div id="budget-list"></div>
-    <div id="budget-add-form">
-      <div class="floral-divider">· · ·</div>
-      <div class="budget-input-label">새 항목 추가</div>
-      <div class="budget-add-row">
-        <input class="inp-name" id="b-name" type="text" placeholder="항목명 (예: 드레스)" onkeydown="if(event.key==='Enter')document.getElementById('b-amt').focus()">
-        <input class="inp-amt" id="b-amt" type="number" inputmode="numeric" placeholder="계약 금액 (원)" oninput="amtHint(this,'b-amt-hint')" onkeydown="if(event.key==='Enter')addBudgetItem()">
-        <select id="b-cat" style="border-radius:10px;border:1px solid var(--rose-pale);padding:8px 10px;font-size:13px;font-family:'Noto Sans KR';color:var(--td);background:white;outline:none;"></select>
-        <button class="add-btn" onclick="addBudgetItem()">추가</button>
-      </div>
-      <div class="amt-hint" id="b-amt-hint"></div>
-      <!-- 카테고리 관리 -->
-      <div id="cat-manage-area" style="margin-top:10px;padding:10px 12px;background:var(--ivory);border-radius:10px">
-        <div style="font-size:11px;color:var(--tl);margin-bottom:8px;font-family:'Noto Serif KR';letter-spacing:1px">카테고리 관리</div>
-        <div id="cat-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px"></div>
-        <div id="cat-suggest" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;align-items:center"></div>
-        <div style="display:flex;gap:6px">
-          <input id="new-cat-input" type="text" placeholder="새 카테고리명" style="flex:1;font-size:13px;padding:7px 10px;border-radius:8px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR'">
-          <button class="add-btn sm" onclick="addBudgetCat()">추가</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- CALENDAR -->
-<div id="page-calendar" class="page">
-  <p class="section-intro">❀ 일정 관리 ❀</p>
-  <div class="card">
-    <div class="cal-header">
-      <button class="cal-nav-btn" onclick="changeMonth(-1)">‹</button>
-      <div class="cal-title" id="cal-title" onclick="goToday()" title="눌러서 이번 달로"></div>
-      <button class="cal-nav-btn" onclick="changeMonth(1)">›</button>
-    </div>
-    <div class="cal-grid" id="cal-grid"></div>
-    <div class="cal-legend">
-      <span><i style="background:var(--rose)"></i>직접 추가</span>
-      <span><i style="background:var(--gold)"></i>체크리스트</span>
-      <span><i style="background:#4C9A6A"></i>납부 예정</span>
-      <span><i style="background:var(--rose-deep)"></i>결혼식</span>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-title">✦ 일정 목록</div>
     <div id="event-list"></div>
-    <div id="event-add-area">
-      <div class="floral-divider">· · ·</div>
-      <div class="budget-input-label">새 일정 추가 <span style="font-size:11px">(달력의 빈 날짜를 눌러도 돼요)</span></div>
-      <div class="event-add-row">
-        <input id="ev-date" type="date" style="flex:1;min-width:130px;">
-        <input id="ev-time" type="time" style="flex:0 0 110px;" title="시간 (선택)">
-        <input id="ev-name" type="text" placeholder="일정명" style="flex:2;min-width:140px;" onkeydown="if(event.key==='Enter')addEvent()">
-        <button class="add-btn" onclick="addEvent()">추가</button>
+  </div>
+</div>
+
+<!-- 돈 = 예산 + 납부 일정 + 정산 -->
+<div id="page-money" class="page">
+  <div class="msum" id="money-sum"></div>
+  <div class="seg seg-full" id="money-seg">
+    <button data-v="items" onclick="setMoneyView('items')">항목</button>
+    <button data-v="pay" onclick="setMoneyView('pay')">납부 일정</button>
+    <button data-v="settle" onclick="setMoneyView('settle')">누가 냈나</button>
+  </div>
+  <div id="money-items">
+    <div class="chips" id="budget-graph"></div>
+    <div id="budget-list"></div>
+    <details class="card fold" id="cat-manage-area">
+      <summary>카테고리 관리</summary>
+      <div id="cat-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 8px"></div>
+      <div id="cat-suggest" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;align-items:center"></div>
+      <div style="display:flex;gap:6px">
+        <input id="new-cat-input" type="text" placeholder="새 카테고리명" class="fold-input" onkeydown="if(event.key==='Enter')addBudgetCat()">
+        <button class="add-btn sm" onclick="addBudgetCat()">추가</button>
       </div>
-    </div>
+    </details>
+  </div>
+  <div id="money-pay"><div id="payment-schedule"></div></div>
+  <div id="money-settle">
+    <p class="view-help">예산 항목에서 「누가 냈나요?」를 고르면 여기 모여요. 결혼 뒤 양가 정산할 때 보세요.</p>
+    <div id="settlement-content"></div>
   </div>
 </div>
 
-<!-- CONTACTS -->
-<div id="page-contacts" class="page">
-  <p class="section-intro">📞 업체 연락처 ❀</p>
-  <div id="contacts-from-budget"></div>
-  <div id="contacts-standalone"></div>
-  <div class="card" id="contact-add-card">
-    <div class="card-title">✦ 연락처 추가</div>
-    <div class="mfield"><label style="font-size:12px;color:var(--tl);display:block;margin-bottom:4px">업체/담당자명 *</label>
-      <input id="ca-name" type="text" placeholder="예: 경미 플래너" style="width:100%;font-size:13px;padding:9px 12px;border-radius:10px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR';color:var(--td);margin-bottom:8px"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-      <input id="ca-phone" type="tel" placeholder="전화번호" style="font-size:13px;padding:9px 12px;border-radius:10px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR';color:var(--td)">
-      <input id="ca-kakao" type="text" placeholder="카카오 ID" style="font-size:13px;padding:9px 12px;border-radius:10px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR';color:var(--td)">
-    </div>
-    <input id="ca-memo" type="text" placeholder="메모 (업무시간, 휴무일 등)" style="width:100%;font-size:13px;padding:9px 12px;border-radius:10px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR';color:var(--td);margin-bottom:8px">
-    <button class="add-btn" style="width:100%" onclick="addContact()">연락처 추가</button>
-  </div>
-</div>
-
-<!-- GUESTS -->
+<!-- 하객 -->
 <div id="page-guests" class="page">
-  <p class="section-intro">💐 예상 하객 💐</p>
   <div class="gside-tabs">
     <button class="gside-tab groom active" id="gtab-groom" onclick="setGuestSide('groom')">🤵 신랑측</button>
     <button class="gside-tab bride" id="gtab-bride" onclick="setGuestSide('bride')">👰 신부측</button>
     <button class="gside-tab all" id="gtab-all" onclick="setGuestSide('all')">💑 전체</button>
   </div>
   <div class="gstat-grid" id="guest-stats"></div>
-  <div class="card" id="guest-list-card">
-    <div class="card-title" id="guest-list-title">✦ 하객</div>
-    <div id="guest-add-area">
-      <div class="gq-add">
-        <input id="ng-name" type="text" placeholder="이름 또는 묶음 (예: 회사 동료)" onkeydown="if(event.key==='Enter')addGuest()">
-        <select id="ng-rel" onchange="onNewRelSelect(this)"></select>
-        <div class="stepper" title="인원"><button onclick="stepNew(-1)" aria-label="인원 빼기">−</button><span id="ng-cnt">1</span><button onclick="stepNew(1)" aria-label="인원 더하기">+</button></div>
-        <button class="add-btn" onclick="addGuest()">추가</button>
-      </div>
-      <div class="gq-help">한 명씩 적어도 되고, 「회사 동료」처럼 묶어서 인원만 적어도 돼요. · <button class="linkish" onclick="openBulkGuests()">여러 명 한 번에 붙여넣기</button></div>
-    </div>
+  <div id="guest-list-card">
     <input id="g-search" class="gsearch" type="search" placeholder="🔍 이름 · 메모 찾기" oninput="renderGuests()">
-    <div class="gq-legend">참석 칸을 누르면 미정 → 참석 → 불참, 📱 을 누르면 청첩장 종류가 바뀌어요. 이름을 누르면 소인 · 메모 · 관계를 고쳐요.</div>
+    <div class="gq-legend" id="g-legend">참석 칸: 미정 → 참석 → 불참 · 📱: 청첩장 종류 · 이름: 자세히 고치기</div>
     <div id="guest-rows"></div>
   </div>
   <div class="card" id="guest-all-card" style="display:none">
@@ -847,26 +845,52 @@ details#guest-rel-card summary{cursor:pointer;font-size:12px;color:var(--tl);fon
       <div id="guest-rel-bars"></div>
     </div>
   </div>
-  <div class="card" id="guest-meal-card">
-    <div class="card-title">✦ 식대 계산</div>
-    <div id="guest-meal-body"></div>
-  </div>
-  <details class="card" id="guest-rel-card">
+  <details class="card fold" id="guest-meal-card">
+    <summary>식대 계산 <span id="g-meal-sum"></span></summary>
+    <div id="guest-meal-body" style="margin-top:8px"></div>
+  </details>
+  <details class="card fold" id="guest-rel-card">
     <summary>관계 종류 관리</summary>
     <div id="grel-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 8px"></div>
     <div style="display:flex;gap:6px">
-      <input id="new-grel-input" type="text" placeholder="새 관계명 (예: 동호회)" style="flex:1;font-size:13px;padding:7px 10px;border-radius:8px;border:1px solid var(--rose-pale);background:white;outline:none;font-family:'Noto Sans KR'" onkeydown="if(event.key==='Enter')addGuestRel()">
+      <input id="new-grel-input" type="text" placeholder="새 관계명 (예: 동호회)" class="fold-input" onkeydown="if(event.key==='Enter')addGuestRel()">
       <button class="add-btn sm" onclick="addGuestRel()">추가</button>
     </div>
   </details>
 </div>
 
-<!-- ADMIN -->
-<div id="page-admin" class="page">
-  <div class="admin-hero">
-    <div class="admin-hero-title">관리 페이지</div>
-    <div class="admin-hero-sub">접속 코드 · 권한 관리</div>
+<!-- 더보기 -->
+<div id="page-more" class="page">
+  <div class="menu-list">
+    <button onclick="showPage('notices')"><span>📣 공지사항</span><span class="menu-r"><span id="more-notice-badge"></span>›</span></button>
+    <button onclick="showPage('contacts')"><span>📞 업체 연락처</span><span class="menu-r">›</span></button>
+    <button id="more-admin" onclick="showPage('admin')"><span>⚙ 접속 코드 · 기기 · 백업</span><span class="menu-r">›</span></button>
   </div>
+  <div class="card" id="person-banner">
+    <div class="menu-h">이 기기를 쓰는 사람</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="person-btn" id="pbtn-groom" onclick="selectPerson('groom')">🤵 <span id="pbtn-groom-name">신랑</span></button>
+      <button class="person-btn" id="pbtn-bride" onclick="selectPerson('bride')">👰 <span id="pbtn-bride-name">신부</span></button>
+    </div>
+    <div class="view-help" style="margin:8px 0 0">고르면 「마지막 수정」에 이름이 남아요.</div>
+    <div class="last-edit-bar" id="last-edit-bar" style="text-align:left;padding:6px 0 0"></div>
+  </div>
+  <button class="admin-logout-btn" onclick="doLogout()">🚪 로그아웃</button>
+</div>
+
+<!-- 공지 -->
+<div id="page-notices" class="page">
+  <div id="notice-list"></div>
+</div>
+
+<!-- 연락처 -->
+<div id="page-contacts" class="page">
+  <div id="contacts-from-budget"></div>
+  <div id="contacts-standalone"></div>
+</div>
+
+<!-- 관리 -->
+<div id="page-admin" class="page">
   <div class="access-card">
     <div class="access-type" style="color:var(--rose-deep)">✏️ 편집 코드 · 신랑 &amp; 신부</div>
     <div class="access-code-display" id="edit-code-display" style="color:var(--rose-deep)">——</div>
@@ -894,7 +918,6 @@ details#guest-rel-card summary{cursor:pointer;font-size:12px;color:var(--tl);fon
     <div class="access-desc" style="margin-bottom:10px">지금 데이터를 파일로 내려받아 둘 수 있어요. 문제가 생기면 이 파일로 되살릴 수 있어요.</div>
     <button class="code-action-btn" onclick="downloadBackup()">📦 백업 파일 받기</button>
   </div>
-  <button class="admin-logout-btn" onclick="doLogout()">🚪 로그아웃</button>
 </div>
 </main>
 
@@ -945,12 +968,23 @@ function personLabel(p){return p==='groom'?`🤵 ${esc(state.name1||'신랑')}`:
 function personCls(p){return p==='groom'?'paidby-groom':p==='bride'?'paidby-bride':p==='both'?'paidby-both':'paidby-none';}
 
 // ── Sync UI ──
-function setSyncUI(m,t){document.getElementById('sdot').className='sdot '+m;document.getElementById('stxt').textContent=t;}
+// 상단 줄 오른쪽 점: 초록 = 연결됨. 저장 중 · 오류일 때만 글자를 보인다
+function setSyncUI(m,t){
+  document.getElementById('sdot').className='sdot '+m;
+  document.getElementById('stxt').textContent=m==='live'?'':t;
+  document.getElementById('sync-status').title=t;
+}
 
 // ── Modal ──
 function openModal(html){document.getElementById('modal-box').innerHTML=html;document.getElementById('modal-overlay').classList.add('open');}
 window.closeModal=function(){document.getElementById('modal-overlay').classList.remove('open');};
 window.closeModalOnBg=function(e){if(e.target===document.getElementById('modal-overlay'))closeModal();};
+// 휴대폰 키보드가 올라오면 보이는 영역에 맞춰 입력창을 올린다(아이폰에서 아래 창이 키보드에 가리지 않게)
+if(window.visualViewport){
+  const vv=window.visualViewport, ov=document.getElementById('modal-overlay');
+  const fit=()=>{ov.style.top=vv.offsetTop+'px';ov.style.height=vv.height+'px';ov.style.bottom='auto';};
+  vv.addEventListener('resize',fit);vv.addEventListener('scroll',fit);fit();
+}
 
 // ── Calendar Popup ──
 let calPopupOpen=false;
@@ -1150,20 +1184,12 @@ async function checkAccess(){
   catch(e){if(isDenied(e)){accessLost();return false;}return true;}
 }
 function applyRoleUI(r){
-  const b=document.getElementById('role-badge');
-  b.style.display='block'; document.getElementById('sync-status').style.display='flex';
-  const adminBtn=document.getElementById('admin-nav-btn');
-  if(r==='editor'){
-    // 휴대폰에선 위쪽 메뉴가 숨겨져 관리 페이지로 갈 길이 없어서, 배지를 누르면 관리로 가게 한다
-    b.textContent='✏️ 편집 · ⚙ 관리';b.className='badge-editor';
-    b.style.cursor='pointer';b.onclick=()=>showPage('admin');
-    if(adminBtn)adminBtn.style.display='';
-    document.getElementById('viewer-banner').style.display='none';
-  }else{
-    b.textContent='👁 보기 전용';b.className='badge-viewer';b.onclick=null;b.style.cursor='';
-    document.getElementById('viewer-banner').style.display='block';
-    if(adminBtn)adminBtn.style.display='none';
-  }
+  document.getElementById('sync-status').style.display='inline-flex';
+  document.getElementById('viewer-banner').style.display=r==='editor'?'none':'flex';
+  document.body.classList.toggle('is-viewer',r!=='editor');
+  ['name1','name2','wedding-date-input'].forEach(id=>{document.getElementById(id).readOnly=r!=='editor';});
+  document.getElementById('wedding-date-input').disabled=r!=='editor';
+  showPage(curPage);
 }
 window.doLogout=async function(){
   if(saveTimer){clearTimeout(saveTimer);await flushSave();}
@@ -1334,14 +1360,14 @@ function ensureDefaults(){
 
 // ════════ RENDER ALL ════════
 function renderAll(){
-  document.getElementById('name1').value=state.name1||'신랑';
-  document.getElementById('name2').value=state.name2||'신부';
+  if(document.activeElement?.id!=='name1')document.getElementById('name1').value=state.name1||'신랑';
+  if(document.activeElement?.id!=='name2')document.getElementById('name2').value=state.name2||'신부';
   document.getElementById('wedding-date-input').value=state.weddingDate||'';
-  if(document.activeElement?.id!=='budget-total-input')document.getElementById('budget-total-input').value=state.budgetTotal||'';
-  calcDday(state.weddingDate); renderOverview(); renderPaymentSchedule(); renderNotices(); renderChecklist(); renderBudget(); renderCalendar(); renderGuests();
-  renderLastEdit(); updatePersonBanner();
-  if(document.getElementById('page-contacts').classList.contains('active'))renderContacts();
-  ['add-section-btn','budget-add-form','event-add-area'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=isEditor()?'':'none';});
+  calcDday(state.weddingDate);
+  renderHome(); renderNotices(); renderChecklist(); renderBudget(); renderPaymentSchedule(); renderCalendar(); renderGuests();
+  renderLastEdit(); updatePersonBanner(); renderMore();
+  if(curPage==='contacts')renderContacts();
+  updateFab();
 }
 // 다른 기기에서 저장이 들어와 화면을 다시 그릴 때, 입력 중이던 칸의 글자와 커서를 지킨다
 function renderAllKeepFocus(){
@@ -1356,40 +1382,203 @@ function renderAllKeepFocus(){
 }
 
 // ════════ NAV ════════
-const PAGES=['dday','checklist','budget','contacts','calendar','guests','admin'];
+// 아래 탭 5개(홈 · 할 일 · 돈 · 하객 · 더보기). 공지 · 연락처 · 관리는 더보기 안의 화면.
+const PAGES=['home','todo','money','guests','more','notices','contacts','admin'];
+const PAGE_TAB={notices:'more',contacts:'more',admin:'more'};
+const PAGE_TITLE={home:'Our Wedding',todo:'할 일',money:'돈',guests:'하객',more:'더보기',notices:'공지사항',contacts:'업체 연락처',admin:'접속 · 기기 · 백업'};
+let curPage='home';
+const pref={
+  get(k,d){try{return localStorage.getItem('wp_'+k)||d;}catch(e){return d;}},
+  set(k,v){try{localStorage.setItem('wp_'+k,v);}catch(e){}}
+};
 window.showPage=function(id){
-  PAGES.forEach(p=>{const el=document.getElementById('page-'+p);if(el)el.classList.remove('active');});
-  document.querySelectorAll('.nav-btn,.bnav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  const idx=PAGES.indexOf(id);
-  document.querySelectorAll('.nav-btn')[idx]?.classList.add('active');
-  if(idx<6)document.querySelectorAll('.bnav-btn')[idx]?.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
+  if(!PAGES.includes(id))id='home';
+  if(id==='admin'&&!isEditor())id='more';
+  curPage=id;
+  PAGES.forEach(p=>document.getElementById('page-'+p)?.classList.toggle('active',p===id));
+  const tab=PAGE_TAB[id]||id;
+  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  document.getElementById('tb-title').textContent=PAGE_TITLE[id];
+  document.getElementById('tb-back').style.display=PAGE_TAB[id]?'':'none';
+  document.body.classList.toggle('on-home',id==='home');
+  window.scrollTo({top:0});
   if(id==='admin')renderAdmin();
-  if(id==='calendar')renderCalendar();
+  if(id==='todo')setTodoView(todoView,true);
+  if(id==='money')setMoneyView(moneyView,true);
   if(id==='contacts')renderContacts();
   if(id==='guests')renderGuests();
+  if(id==='notices')renderNotices();
+  updateFab();
 };
+window.goBack=function(){showPage(PAGE_TAB[curPage]||'home');};
+
+let todoView=pref.get('todoView','list');
+window.setTodoView=function(v,silent){
+  todoView=v==='cal'?'cal':'list';pref.set('todoView',todoView);
+  document.getElementById('todo-list').style.display=todoView==='list'?'':'none';
+  document.getElementById('todo-cal').style.display=todoView==='cal'?'':'none';
+  document.querySelectorAll('#todo-seg button').forEach(b=>b.classList.toggle('on',b.dataset.v===todoView));
+  if(todoView==='cal')renderCalendar();
+  if(!silent)window.scrollTo({top:0});
+  updateFab();
+};
+let moneyView=pref.get('moneyView','items');
+window.setMoneyView=function(v,silent){
+  moneyView=['items','pay','settle'].includes(v)?v:'items';pref.set('moneyView',moneyView);
+  ['items','pay','settle'].forEach(k=>{document.getElementById('money-'+k).style.display=k===moneyView?'':'none';});
+  document.querySelectorAll('#money-seg button').forEach(b=>b.classList.toggle('on',b.dataset.v===moneyView));
+  if(moneyView==='settle')renderSettlement();
+  if(moneyView==='pay')renderPaymentSchedule();
+  updateFab();
+};
+
+// ════════ + 버튼: 보고 있는 화면에 맞는 입력창을 아래에서 올린다 ════════
+function fabAction(){
+  const ed=isEditor();
+  if(curPage==='notices')return'notice';
+  if(!ed)return curPage==='home'?'notice':null; // 보기 코드는 공지만 쓸 수 있다
+  if(curPage==='home')return'menu';
+  if(curPage==='todo')return todoView==='cal'?'event':'task';
+  if(curPage==='money')return'budget';
+  if(curPage==='guests')return'guest';
+  if(curPage==='contacts')return'contact';
+  return null;
+}
+function updateFab(){const f=document.getElementById('fab');if(f)f.style.display=role&&fabAction()?'flex':'none';}
+window.openFab=function(){
+  const a=fabAction();
+  if(a==='menu')openAddMenu();
+  else if(a==='task')openAddTask();
+  else if(a==='event')openAddEvent(todayStr());
+  else if(a==='budget')openAddBudget();
+  else if(a==='guest')openAddGuest();
+  else if(a==='contact')openAddContact();
+  else if(a==='notice')openAddNotice();
+};
+function openAddMenu(){
+  const b=(icon,label,fn)=>`<button class="sheet-menu-btn" onclick="${fn}"><span>${icon}</span>${label}</button>`;
+  openModal(`<h3>무엇을 추가할까요?</h3>
+    <div class="sheet-menu">
+      ${b('✅','할 일',"closeModal();showPage('todo');setTodoView('list');openAddTask()")}
+      ${b('📅','일정',"closeModal();showPage('todo');setTodoView('cal');openAddEvent(todayStr())")}
+      ${b('💰','예산 항목',"closeModal();showPage('money');setMoneyView('items');openAddBudget()")}
+      ${b('💐','하객',"closeModal();showPage('guests');openAddGuest()")}
+      ${b('📞','연락처',"closeModal();showPage('contacts');openAddContact()")}
+      ${b('📣','공지',"closeModal();openAddNotice()")}
+    </div>
+    <div class="mbtn-row"><button class="mbtn secondary" onclick="closeModal()">닫기</button></div>`);
+}
+window.todayStr=todayStr;
 
 // ════════ D-DAY ════════
 function calcDday(val){
-  if(!val){
-    document.getElementById('dday-num').textContent='—';
-    document.getElementById('dday-text').textContent='결혼식 날짜를 골라 주세요';
-    document.getElementById('stat-months').textContent='—';document.getElementById('stat-weeks').textContent='—';
-    return;
-  }
-  const today=new Date();today.setHours(0,0,0,0);
-  const w=new Date(val+'T00:00:00');
-  const diff=Math.round((w-today)/86400000);
-  document.getElementById('dday-num').textContent=diff>0?diff:diff===0?'D-0':Math.abs(diff);
-  document.getElementById('dday-text').textContent=diff>0?'결혼식까지 남은 날':diff===0?'오늘이 결혼식 날이에요! 🎊':'결혼식 후 지난 날';
-  document.getElementById('stat-months').textContent=diff>0?Math.floor(diff/30):'—';
-  document.getElementById('stat-weeks').textContent=diff>0?Math.floor(diff/7):'—';
+  const num=document.getElementById('dday-num'), txt=document.getElementById('dday-text');
+  const lbl=document.getElementById('wedding-date-label'), tb=document.getElementById('tb-dday');
+  if(!val){num.textContent='—';txt.textContent='결혼식 날짜를 골라 주세요';lbl.textContent=isEditor()?'📅 날짜 고르기':'날짜 미정';tb.textContent='';return;}
+  const diff=dayDiff(val);
+  const d=new Date(val+'T00:00:00');
+  lbl.textContent=`${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${DA[d.getDay()]})`;
+  num.textContent=diff>0?`D-${diff}`:diff===0?'D-Day':`D+${-diff}`;
+  txt.textContent=diff>0?`${Math.floor(diff/30)}개월 · ${Math.floor(diff/7)}주 남았어요`:diff===0?'오늘이 결혼식 날이에요 🎊':'결혼을 축하해요 💐';
+  tb.textContent=diff>=0?(diff===0?'D-Day':`D-${diff}`):'';
 }
-window.onDateChange=function(){const v=document.getElementById('wedding-date-input').value;calcDday(v);if(isEditor()&&state.weddingDate!==v){state.weddingDate=v;scheduleSave();}};
+window.onDateChange=function(){const v=document.getElementById('wedding-date-input').value;calcDday(v);if(isEditor()&&state.weddingDate!==v){state.weddingDate=v;scheduleSave();renderHome();}};
 document.getElementById('name1').addEventListener('input',e=>{if(!isEditor())return;state.name1=e.target.value;scheduleSave();});
 document.getElementById('name2').addEventListener('input',e=>{if(!isEditor())return;state.name2=e.target.value;scheduleSave();});
+
+// ════════ 홈: 지금 볼 것만 한 화면에 ════════
+function man(n){
+  n=Math.round(Number(n)||0);
+  if(Math.abs(n)>=1e8)return(Math.round(n/1e7)/10).toLocaleString()+'억';
+  if(Math.abs(n)>=1e4)return Math.round(n/1e4).toLocaleString()+'만';
+  return n.toLocaleString();
+}
+function allTasks(){
+  const out=[];
+  (state.sections||[]).forEach(sec=>sec.items.forEach(it=>{
+    out.push({sId:sec.id,iId:it.id,subId:null,name:it.name,date:it.date,status:it.status||'pending',sec:sec.title,hasSubs:!!(it.subs&&it.subs.length)});
+    (it.subs||[]).forEach(s=>out.push({sId:sec.id,iId:it.id,subId:s.id,name:s.name,date:s.date,status:s.status||'pending',sec:it.name}));
+  }));
+  return out;
+}
+function dTag(diff){
+  if(diff<0)return`<span class="htag over">${-diff}일 지남</span>`;
+  if(diff===0)return'<span class="htag soon">오늘</span>';
+  if(diff<=14)return`<span class="htag soon">D-${diff}</span>`;
+  return`<span class="htag">D-${diff}</span>`;
+}
+function homeCard(title,right,body,go){
+  return`<div class="hcard"><div class="hcard-h" ${go?`onclick="${go}"`:''}><span>${title}</span><span class="hcard-r">${right}${go?' ›':''}</span></div>${body}</div>`;
+}
+function renderHome(){
+  const box=document.getElementById('home-cards');if(!box)return;
+  const ed=isEditor();
+  const cards=[];
+  // 1) 할 일: 기한 지남 → 14일 안 → 그다음 날짜 있는 것, 최대 4개
+  const tasks=allTasks();
+  const active=tasks.filter(t=>t.status!=='cancelled');
+  const open=active.filter(t=>t.status==='pending'&&!t.hasSubs);
+  const dated=open.filter(t=>t.date).sort((a,b)=>a.date.localeCompare(b.date));
+  let pick=dated.slice(0,4);
+  if(pick.length<3)pick=pick.concat(open.filter(t=>!t.date).slice(0,3-pick.length));
+  const doneCnt=active.filter(t=>t.status==='done').length;
+  const pct=active.length?Math.round(doneCnt/active.length*100):0;
+  const taskRows=pick.map(t=>`<div class="hrow">
+      <span class="check-tap" ${ed?`onclick="toggleDone('${t.sId}','${t.iId}',${t.subId?`'${t.subId}'`:'null'});renderHome()"`:''}><span class="ccheck"></span></span>
+      <span class="hrow-name" onclick="showPage('todo');setTodoView('list')">${esc(t.name)}<small>${esc(t.sec)}</small></span>
+      ${t.date?dTag(dayDiff(t.date)):''}
+    </div>`).join('');
+  cards.push(homeCard('✅ 할 일',`${pct}% · 남은 ${open.length}`,
+    taskRows||'<p class="hempty">남은 할 일이 없어요 🎉</p>',"showPage('todo');setTodoView('list')"));
+  // 2) 곧 낼 돈: 안 낸 것 중 기한 지남 + 30일 안
+  const dues=[];
+  (state.budgetItems||[]).forEach(bi=>(bi.subs||[]).forEach(s=>{
+    if(s.dueDate&&!isSubPaid(s)&&dayDiff(s.dueDate)<=30)dues.push({bi,s,diff:dayDiff(s.dueDate)});
+  }));
+  dues.sort((a,b)=>a.diff-b.diff);
+  const total=state.budgetTotal||0, items=state.budgetItems||[];
+  const contracted=items.reduce((a,bi)=>a+getBiTotal(bi),0), paid=items.reduce((a,bi)=>a+getPaidTotal(bi),0);
+  const bp=total?Math.min(100,Math.round(contracted/total*100)):0;
+  const dueRows=dues.slice(0,3).map(x=>`<div class="hrow" onclick="${ed?`openPayChooser(${x.bi.id},'${x.s.id}')`:"showPage('money');setMoneyView('pay')"}">
+      <span class="hrow-name">${esc(x.bi.name)} ${esc(x.s.name)}<small>${man(x.s.amt)}원${ed?' · 냈으면 눌러서 표시':''}</small></span>${dTag(x.diff)}
+    </div>`).join('');
+  cards.push(homeCard('💳 곧 낼 돈',dues.length?`${dues.length}건 · ${man(dues.reduce((a,x)=>a+(x.s.amt||0),0))}원`:'',
+    (dueRows||'<p class="hempty">30일 안에 낼 돈이 없어요</p>')
+    +`<div class="hmeter-row" onclick="showPage('money');setMoneyView('items')"><span>계약 ${man(contracted)} / 예산 ${total?man(total):'—'}</span><span>낸 돈 ${man(paid)}</span></div>
+      <div class="hmeter"><div style="width:${bp}%;background:${contracted>total&&total?'#E57373':'var(--rose)'}"></div></div>`,
+    "showPage('money');setMoneyView('pay')"));
+  // 3) 다가오는 일정: 직접 넣은 일정만(체크리스트 날짜는 위 「할 일」, 납부는 「곧 낼 돈」에 이미 있다)
+  const evs=getAllEvents().filter(e=>e.type==='manual'&&dayDiff(e.date)>=0)
+    .sort((a,b)=>(a.date+(a.time||'')).localeCompare(b.date+(b.time||''))).slice(0,3);
+  cards.push(homeCard('📅 다가오는 일정','',
+    evs.map(e=>`<div class="hrow" onclick="showPage('todo');setTodoView('cal')"><span class="hdate">${fmt(e.date)}</span><span class="hrow-name">${e.time?esc(e.time)+' ':''}${esc(e.name)}</span>${dTag(dayDiff(e.date))}</div>`).join('')
+      ||'<p class="hempty">다가오는 일정이 없어요</p>',
+    "showPage('todo');setTodoView('cal')"));
+  // 4) 하객
+  const G=state.guests||{}, cG=gCalc(G.groomList||[]), cB=gCalc(G.brideList||[]);
+  const ppl=c=>({conf:c.adult+c.child,maybe:c.tbdAdult+c.tbdChild});
+  const pG=ppl(cG), pB=ppl(cB), sum=pG.conf+pG.maybe+pB.conf+pB.maybe;
+  cards.push(homeCard('💐 하객',sum?`예상 ${sum}명`:'',
+    sum?`<div class="hrow" onclick="showPage('guests')"><span class="hrow-name">🤵 ${esc(state.name1||'신랑')}측 ${pG.conf+pG.maybe}명 · 👰 ${esc(state.name2||'신부')}측 ${pB.conf+pB.maybe}명<small>확정 ${pG.conf+pB.conf} · 미정 ${pG.maybe+pB.maybe}</small></span></div>`
+      :`<p class="hempty">아직 명단이 없어요${ed?' — 하객 탭에서 + 로 추가해요':''}</p>`,
+    "showPage('guests')"));
+  // 5) 공지(최근 1개)
+  const ns=state.notices||[];
+  if(ns.length){
+    const n=ns[ns.length-1];
+    cards.push(homeCard('📣 공지',`${ns.length}개`,
+      `<div class="hrow" onclick="expandedNotices.add('${esc(n.id)}');showPage('notices')"><span class="hrow-name">${n.date===todayStr()?'<span class="notice-new">NEW</span> ':''}${esc(n.title)}<small>${esc(n.date)}</small></span></div>`,
+      "showPage('notices')"));
+  }
+  box.innerHTML=cards.join('');
+}
+
+// ════════ 더보기 ════════
+function renderMore(){
+  const b=document.getElementById('more-notice-badge');
+  if(b){const n=(state.notices||[]).filter(x=>x.date===todayStr()).length;b.innerHTML=n?'<span class="notice-new">NEW</span>':'';}
+  const a=document.getElementById('more-admin');if(a)a.style.display=isEditor()?'':'none';
+}
 
 // ════════ NOTICES ════════
 function todayStr(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
@@ -1400,31 +1589,24 @@ function renderNotices(){
   const notices=[...(state.notices||[])].reverse();
   const today=todayStr();
   list.innerHTML='';
-  if(!notices.length){list.innerHTML='<p style="font-size:13px;color:var(--tl);text-align:center;padding:12px 0;">등록된 공지가 없어요</p>';}
+  if(!notices.length){list.innerHTML='<p class="hempty" style="padding:24px 0">등록된 공지가 없어요. 아래 + 로 올릴 수 있어요.</p>';return;}
   notices.forEach(n=>{
     const isNew=n.date===today;
     const isExp=expandedNotices.has(n.id);
     const div=document.createElement('div');
     div.className='notice-item';
-    div.style.position='relative';
     const bodyHtml=esc(n.body||'').replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>');
     div.innerHTML=`
-      <div class="notice-header" onclick="toggleNotice('${n.id}')">
+      <div class="notice-header" onclick="toggleNotice('${esc(n.id)}')">
         ${isNew?'<span class="notice-new">NEW</span>':''}
         <span class="notice-title-text">${esc(n.title)}</span>
         <span class="notice-meta">${esc(n.date)}</span>
-        ${isEditor()?`
-          <button class="icon-btn" onclick="event.stopPropagation();openEditNotice('${n.id}')" title="편집" style="font-size:13px;padding:2px 4px">✏️</button>
-          <button class="icon-btn" onclick="event.stopPropagation();delNotice('${n.id}')" title="삭제" style="font-size:13px;padding:2px 4px">🗑️</button>
-        `:''}
         <span class="notice-expand-arrow${isExp?' open':''}">▼</span>
       </div>
-      ${isExp?`<div class="notice-body">${bodyHtml}</div>`:''}
+      ${isExp?`<div class="notice-body">${bodyHtml}${isEditor()?`<div class="ci-actions" style="margin:12px 0 0"><button class="mini-btn" onclick="openEditNotice('${esc(n.id)}')">✏️ 편집</button><button class="mini-btn danger" onclick="delNotice('${esc(n.id)}')">🗑️ 삭제</button></div>`:''}</div>`:''}
     `;
     list.appendChild(div);
   });
-  const form=document.getElementById('notice-add-form');
-  if(form)form.style.display='block';
 }
 
 // 펼침 상태는 각자 화면에만(예전엔 저장돼서 상대 화면도 같이 펼쳐졌다)
@@ -1433,6 +1615,7 @@ window.toggleNotice=function(id){
   if(expandedNotices.has(id))expandedNotices.delete(id);else expandedNotices.add(id);
   renderNotices();
 };
+window.expandedNotices=expandedNotices;
 
 window.openEditNotice=function(id){
   if(!isEditor())return;
@@ -1440,18 +1623,12 @@ window.openEditNotice=function(id){
   if(!n)return;
   openModal(`
     <h3>✏️ 공지 편집</h3>
-    <div class="mfield">
-      <label>제목</label>
-      <input id="en-title" value="${esc(n.title)}">
-    </div>
-    <div class="mfield">
-      <label>내용</label>
-      <textarea id="en-body" style="min-height:260px;font-size:12px;line-height:1.7">${esc(n.body||'')}</textarea>
-    </div>
+    <div class="mfield"><label>제목</label><input id="en-title" value="${esc(n.title)}"></div>
+    <div class="mfield"><label>내용</label><textarea id="en-body" style="min-height:220px;line-height:1.7">${esc(n.body||'')}</textarea></div>
     <div class="mbtn-row">
-      <button class="mbtn primary" onclick="saveEditNotice('${id}')">저장</button>
-      <button class="mbtn secondary" onclick="closeModal()">취소</button>
-      <button class="mbtn danger" onclick="delNotice('${id}')">삭제</button>
+      <button class="mbtn primary" onclick="saveEditNotice('${esc(id)}')">저장</button>
+      <button class="mbtn secondary" onclick="closeModal()">닫기</button>
+      <button class="mbtn danger" onclick="delNotice('${esc(id)}')">삭제</button>
     </div>`);
 };
 
@@ -1466,18 +1643,29 @@ window.saveEditNotice=function(id){
   n.body=body;
   closeModal();
   saveNotices();
-  renderNotices();
+  renderNotices();renderHome();
 };
 
+window.openAddNotice=function(){
+  openModal(`
+    <h3>📣 공지 쓰기</h3>
+    <div class="mfield"><label>제목</label><input id="notice-title" placeholder="예: 드레스 투어 안내"></div>
+    <div class="mfield"><label>내용</label><textarea id="notice-body" style="min-height:160px;line-height:1.6" placeholder="공지 내용을 입력하세요"></textarea></div>
+    <div class="mbtn-row">
+      <button class="mbtn primary" onclick="addNotice()">올리기</button>
+      <button class="mbtn secondary" onclick="closeModal()">닫기</button>
+    </div>`);
+  setTimeout(()=>document.getElementById('notice-title')?.focus(),60);
+};
 window.addNotice=function(){
   const title=document.getElementById('notice-title').value.trim();
   const body=document.getElementById('notice-body').value.trim();
   if(!title||!body){alert('제목과 내용을 모두 입력해주세요');return;}
   if(!state.notices)state.notices=[];
   state.notices.push({id:'n'+Date.now(),title,body,date:todayStr(),authorRole:role});
-  document.getElementById('notice-title').value='';
-  document.getElementById('notice-body').value='';
-  saveNotices();renderNotices();
+  closeModal();
+  saveNotices();renderNotices();renderHome();renderMore();
+  if(curPage!=='notices')showPage('notices');
 };
 
 window.delNotice=function(id){
@@ -1485,22 +1673,8 @@ window.delNotice=function(id){
   if(!confirm('이 공지를 삭제할까요?'))return;
   closeModal();
   state.notices=(state.notices||[]).filter(n=>n.id!==id);
-  saveNotices();renderNotices();
+  saveNotices();renderNotices();renderHome();
 };
-
-function renderOverview(){
-  const all=(state.sections||[]).flatMap(s=>s.items);
-  const subs=(state.sections||[]).flatMap(s=>s.items.flatMap(i=>i.subs||[]));
-  const items=[...all,...subs];
-  const cancelled=items.filter(i=>i.status==='cancelled').length;
-  const total=items.length-cancelled, done=items.filter(i=>i.status==='done').length;
-  const pct=total?Math.round(done/total*100):0; // 취소한 항목은 진행률에서 뺀다
-  document.getElementById('overview-stats').innerHTML=`
-    <div class="stat-card"><div class="stat-num">${done}/${total}</div><div class="stat-lbl">체크리스트 완료</div></div>
-    <div class="stat-card"><div class="stat-num">${pct}%</div><div class="stat-lbl">전체 진행률</div></div>
-    <div class="stat-card"><div class="stat-num">${cancelled}</div><div class="stat-lbl">취소된 항목</div></div>
-    <div class="stat-card"><div class="stat-num">${getAllEvents().filter(e=>dayDiff(e.date)>=0).length}</div><div class="stat-lbl">다가오는 일정</div></div>`;
-}
 
 // ════════ EVENTS ════════
 // 일정 = 직접 추가 + 체크리스트 날짜 + 예산 납부 예정일 + 결혼식
@@ -1588,61 +1762,113 @@ function checkItemHtml(sec,item,ed){
     <div class="check-sub-list" id="sl-${item.id}" style="display:${isExp?'block':'none'}">${subHtml}${editHtml}</div>`;
 }
 
+// 카테고리 접기: 사람이 정한 값이 있으면 그대로, 없으면 다 끝난 카테고리만 접는다(기기마다 따로)
+let secOpenPref=(()=>{try{return JSON.parse(pref.get('secOpen','{}'))||{};}catch(e){return{};}})();
+function isSecOpen(sec,openCnt){return sec.id in secOpenPref?secOpenPref[sec.id]:openCnt>0;}
+window.toggleSec=function(id){
+  const sec=(state.sections||[]).find(s=>s.id===id);if(!sec)return;
+  const openCnt=sec.items.filter(it=>isOpenItem(it)||(it.subs||[]).some(isOpenItem)).length;
+  secOpenPref[id]=!isSecOpen(sec,openCnt);pref.set('secOpen',JSON.stringify(secOpenPref));
+  renderChecklist();
+};
 function renderChecklist(){
   const c=document.getElementById('checklist-container'); c.innerHTML='';
   const ed=isEditor();
   const secs=state.sections||[];
   const tb=document.createElement('div');tb.className='cl-toolbar';
-  tb.innerHTML=`<span class="cl-hint">${ed?'□ 를 누르면 완료, 줄을 누르면 하위 항목 · 편집':'줄을 누르면 하위 항목이 보여요'}</span>
+  tb.innerHTML=`<span class="cl-hint">${ed?'□ 완료 · 줄을 누르면 자세히':'줄을 누르면 하위 항목이 보여요'}</span>
     <div class="seg"><button class="${clView==='all'?'on':''}" onclick="setClView('all')">전체</button><button class="${clView==='open'?'on':''}" onclick="setClView('open')">남은 것만</button></div>`;
   c.appendChild(tb);
-  secs.forEach((sec,secIdx)=>{
+  if(!secs.length){c.insertAdjacentHTML('beforeend','<p class="hempty" style="padding:24px 0">카테고리가 없어요. 아래 「+ 새 카테고리」로 시작해요.</p>');}
+  secs.forEach(sec=>{
     const allI=[...sec.items,...sec.items.flatMap(i=>i.subs||[])];
     const active=allI.filter(i=>i.status!=='cancelled');
     const done=active.filter(i=>i.status==='done').length, total=active.length;
     const pct=total?Math.round(done/total*100):0;
-    const div=document.createElement('div');
-    div.className='card check-section';
-    div.dataset.secIdx=secIdx;
-    // 카테고리 순서 바꾸기: PC 는 끌어서, 휴대폰은 ▲▼
-    div.addEventListener('dragover',e=>{e.preventDefault();div.classList.add('drag-over');});
-    div.addEventListener('dragleave',()=>div.classList.remove('drag-over'));
-    div.addEventListener('drop',e=>{
-      e.preventDefault();div.classList.remove('drag-over');
-      if(!isEditor())return;
-      const from=parseInt(e.dataTransfer.getData('text/plain'));
-      const to=secIdx;
-      if(isNaN(from)||from===to)return;
-      const [moved]=state.sections.splice(from,1);
-      state.sections.splice(to,0,moved);
-      scheduleSave();renderChecklist();
-    });
-    const shown=clView==='open'?sec.items.filter(it=>isOpenItem(it)||(it.subs||[]).some(isOpenItem)):sec.items;
+    const openItems=sec.items.filter(it=>isOpenItem(it)||(it.subs||[]).some(isOpenItem));
+    const isOpen=isSecOpen(sec,openItems.length);
+    // 접혔을 때 한 줄 요약: 남은 개수 + 가장 가까운 날짜
+    const next=openItems.filter(it=>it.date).sort((a,b)=>a.date.localeCompare(b.date))[0];
+    const summary=!openItems.length?(sec.items.length?'모두 끝났어요 ✓':'항목이 없어요')
+      :`남은 ${openItems.length}개${next?` · 다음: ${esc(next.name)} ${fmt(next.date)}`:''}`;
+    const shown=clView==='open'?openItems:sec.items;
     const hidden=sec.items.length-shown.length;
-    const iHtml=shown.map(item=>checkItemHtml(sec,item,ed)).join('')
-      +(clView==='open'&&hidden?`<div class="cs-done-note">✓ 끝난 항목 ${hidden}개 숨김</div>`:'');
-    const addItemHtml=ed?`
-      <div class="add-item-row">
-        <input type="text" placeholder="새 항목명..." id="ni-${sec.id}" onkeydown="if(event.key==='Enter')addItem('${sec.id}')">
-        <input type="date" id="nd-${sec.id}" style="color:var(--tm)">
-        <button class="add-btn" onclick="addItem('${sec.id}')">추가</button>
-      </div>`:'';
+    const body=isOpen?shown.map(item=>checkItemHtml(sec,item,ed)).join('')
+      +(clView==='open'&&hidden?`<div class="cs-done-note">✓ 끝난 항목 ${hidden}개 숨김</div>`:'')
+      +(ed?`<button class="cs-add" onclick="openAddTask('${sec.id}')">+ 이 카테고리에 추가</button>`:''):'';
+    const div=document.createElement('div');
+    div.className='card check-section'+(isOpen?'':' folded');
     div.innerHTML=`
-      <div class="cs-header">
-        ${ed?`<span class="drag-handle" draggable="true"
-          ondragstart="event.stopPropagation();event.dataTransfer.setData('text/plain','${secIdx}');this.closest('.check-section').classList.add('dragging')"
-          ondragend="this.closest('.check-section').classList.remove('dragging')"
-          title="드래그하여 순서 변경">⠿</span>`:''}
-        <input class="cs-title-input" value="${esc(sec.title)}" ${ed?`onchange="renameSection('${sec.id}',this.value)"`:'readonly'} onclick="event.stopPropagation()">
+      <div class="cs-header" onclick="toggleSec('${sec.id}')">
+        <span class="cs-arrow${isOpen?' open':''}">▶</span>
+        <span class="cs-title">${esc(sec.title)}</span>
         <span class="cs-progress">${done} / ${total}</span>
-        ${ed?`<button class="icon-btn cs-move" onclick="moveSection('${sec.id}',-1)" title="위로">▲</button><button class="icon-btn cs-move" onclick="moveSection('${sec.id}',1)" title="아래로">▼</button>`:''}
-        ${ed?`<button class="icon-btn" onclick="delSection('${sec.id}')" title="카테고리 삭제">🗑️</button>`:''}
+        ${ed?`<button class="icon-btn" onclick="event.stopPropagation();openSectionMenu('${sec.id}')" title="카테고리 이름 · 순서 · 삭제" aria-label="카테고리 메뉴">⋯</button>`:''}
       </div>
       <div class="cs-bar"><div class="cs-bar-fill" style="width:${pct}%"></div></div>
-      ${iHtml}${addItemHtml}`;
+      ${isOpen?'':`<div class="cs-summary" onclick="toggleSec('${sec.id}')">${summary}</div>`}
+      ${body}`;
     c.appendChild(div);
   });
+  const addSec=document.getElementById('add-section-btn');if(addSec)addSec.style.display=ed?'':'none';
 }
+
+// 카테고리 메뉴: 이름 · 순서 · 삭제
+window.openSectionMenu=function(sId){
+  if(!isEditor())return;
+  const i=state.sections.findIndex(s=>s.id===sId);if(i<0)return;
+  const sec=state.sections[i];
+  openModal(`<h3>📁 카테고리</h3>
+    <div class="mfield"><label>이름</label><input id="sec-name" value="${esc(sec.title)}"></div>
+    <div class="mbtn-row">
+      <button class="mbtn secondary" ${i===0?'disabled':''} onclick="moveSection('${sId}',-1);closeModal()">▲ 위로</button>
+      <button class="mbtn secondary" ${i===state.sections.length-1?'disabled':''} onclick="moveSection('${sId}',1);closeModal()">▼ 아래로</button>
+    </div>
+    <div class="mbtn-row">
+      <button class="mbtn primary" onclick="renameSection('${sId}',document.getElementById('sec-name').value);closeModal();renderChecklist()">저장</button>
+      <button class="mbtn danger" onclick="closeModal();delSection('${sId}')">삭제</button>
+    </div>`);
+};
+
+// 할 일 추가(아래에서 올라오는 창). 추가한 뒤에도 창을 열어 둬서 이어서 적을 수 있다.
+window.openAddTask=function(sId){
+  if(!isEditor())return;
+  const secs=state.sections||[];
+  const last=sId||pref.get('lastSec','')||(secs[0]&&secs[0].id)||'';
+  openModal(`<h3>✅ 할 일 추가</h3>
+    <div class="mfield"><label>할 일</label><input id="nt-name" placeholder="예: 청첩장 문구 정하기" onkeydown="if(event.key==='Enter')addTaskFromSheet()"></div>
+    <div class="mfield"><label>카테고리</label><select id="nt-sec" onchange="if(this.value==='__new')newSectionFromSheet(this)">
+      ${secs.map(s=>`<option value="${esc(s.id)}"${s.id===last?' selected':''}>${esc(s.title)}</option>`).join('')}
+      <option value="__new">+ 새 카테고리…</option></select></div>
+    <div class="mfield"><label>날짜 (선택 — 넣으면 홈 · 달력에도 보여요)</label><input type="date" id="nt-date"></div>
+    <div class="sheet-ok" id="nt-ok"></div>
+    <div class="mbtn-row">
+      <button class="mbtn primary" onclick="addTaskFromSheet()">추가</button>
+      <button class="mbtn secondary" onclick="closeModal()">닫기</button>
+    </div>`);
+  setTimeout(()=>document.getElementById('nt-name')?.focus(),60);
+};
+window.newSectionFromSheet=function(sel){
+  const name=(prompt('새 카테고리 이름 (예: 신혼여행)')||'').trim();
+  if(!name){sel.value=(state.sections[0]&&state.sections[0].id)||'';return;}
+  const id='sec'+Date.now();
+  state.sections.push({id,title:name,items:[]});
+  sel.insertAdjacentHTML('afterbegin',`<option value="${esc(id)}">${esc(name)}</option>`);
+  sel.value=id;scheduleSave();renderChecklist();
+};
+window.addTaskFromSheet=function(){
+  if(!isEditor())return;
+  const ni=document.getElementById('nt-name'), sid=document.getElementById('nt-sec').value, nd=document.getElementById('nt-date');
+  const val=ni.value.trim();if(!val){ni.focus();return;}
+  let sec=state.sections.find(s=>s.id===sid);
+  if(!sec){sec={id:'sec'+Date.now(),title:'할 일',items:[]};state.sections.push(sec);}
+  sec.items.push({id:'u'+Date.now(),name:val,detail:'',status:'pending',date:nd.value||'',subs:[],cancelMemo:''});
+  pref.set('lastSec',sec.id);
+  secOpenPref[sec.id]=true;pref.set('secOpen',JSON.stringify(secOpenPref));
+  scheduleSave();renderChecklist();renderHome();
+  document.getElementById('nt-ok').textContent=`✓ 「${val}」 추가했어요 — 이어서 적어도 돼요`;
+  ni.value='';nd.value='';ni.focus();
+};
 
 // □ 누르기: 진행 전 ↔ 완료 (취소된 건 진행 전으로 되돌림). 취소는 편집 창에서.
 window.toggleDone=function(sId,iId,subId){
@@ -1654,7 +1880,7 @@ window.toggleDone=function(sId,iId,subId){
   target.status=cur==='pending'?'done':'pending';
   if(cur==='cancelled')target.cancelMemo='';
   if(subId){syncParentStatus(item);expandedItems.add(iId);}
-  scheduleSave();renderChecklist();renderOverview();
+  scheduleSave();renderChecklist();renderHome();
 };
 // 하위 항목이 (취소 빼고) 다 끝나면 상위도 완료, 하나라도 남으면 진행 전
 function syncParentStatus(item){
@@ -1727,14 +1953,6 @@ window.delSub=function(sId,iId,subId){
   const item=findItem(sId,iId);item.subs=(item.subs||[]).filter(s=>s.id!==subId);
   syncParentStatus(item);expandedItems.add(iId);closeModal();scheduleSave();renderChecklist();
 };
-window.addItem=function(sId){
-  if(!isEditor())return;
-  const ni=document.getElementById('ni-'+sId),nd=document.getElementById('nd-'+sId);
-  const val=ni.value.trim();if(!val)return;
-  state.sections.find(s=>s.id===sId).items.push({id:'u'+Date.now(),name:val,detail:'',status:'pending',date:nd.value||'',subs:[],cancelMemo:''});
-  scheduleSave();renderChecklist();
-  document.getElementById('ni-'+sId)?.focus(); // 이어서 바로 입력
-};
 window.addSub=function(sId,iId){
   if(!isEditor())return;
   const ni=document.getElementById('sn-'+iId),nd=document.getElementById('sd-'+iId);
@@ -1760,7 +1978,13 @@ window.delSection=function(sId){
   if(!confirm(`"${sec?.title||'카테고리'}"${sec?.items.length?`와 안의 항목 ${sec.items.length}개를`:'를'} 삭제할까요?`))return;
   state.sections=state.sections.filter(s=>s.id!==sId);scheduleSave();renderChecklist();
 };
-window.addSection=function(){if(!isEditor())return;const id='sec'+Date.now();state.sections.push({id,title:'새 카테고리',items:[]});scheduleSave();renderChecklist();setTimeout(()=>{const ins=document.querySelectorAll('.cs-title-input');if(ins.length)ins[ins.length-1].select();},50);};
+window.addSection=function(){
+  if(!isEditor())return;
+  const name=(prompt('새 카테고리 이름 (예: 신혼여행)')||'').trim();if(!name)return;
+  const id='sec'+Date.now();state.sections.push({id,title:name,items:[]});
+  secOpenPref[id]=true;pref.set('secOpen',JSON.stringify(secOpenPref));
+  scheduleSave();renderChecklist();
+};
 
 // ════════ PERSON SELECTOR ════════
 window.selectPerson=function(p){
@@ -1776,7 +2000,7 @@ function updatePersonBanner(){
   const bn=document.getElementById('pbtn-bride-name');
   if(!banner)return;
   if(!isEditor()){banner.style.display='none';return;}
-  banner.style.display='flex';
+  banner.style.display='block';
   if(gn)gn.textContent=state.name1||'신랑';
   if(bn)bn.textContent=state.name2||'신부';
   if(gb)gb.className='person-btn'+(currentUserPerson==='groom'?' active-groom':'');
@@ -1867,15 +2091,6 @@ window.setPayer=function(biId,subId,p){
 };
 
 // ════════ SETTLEMENT VIEW ════════
-let settlementOpen=false;
-window.toggleSettlement=function(){
-  settlementOpen=!settlementOpen;
-  const el=document.getElementById('settlement-content');
-  const arrow=document.getElementById('settle-toggle-arrow');
-  if(el)el.style.display=settlementOpen?'block':'none';
-  if(arrow)arrow.textContent=settlementOpen?'▲':'▼';
-  if(settlementOpen)renderSettlement();
-};
 let settleSortBy='cat'; // 'cat' | 'amt-desc' | 'amt-asc' | 'name'
 
 function renderSettlement(){
@@ -1996,62 +2211,83 @@ function renderBudget(){
   const remain=total-contracted;
   const pct=total?Math.min(100,Math.round(contracted/total*100)):0;
   const pp=paidByPerson(items);
-  document.getElementById('budget-total-display').innerHTML=`<span>₩</span> ${total.toLocaleString()}`;
-  document.getElementById('bt-hint').textContent=total?krw(total):'아래 칸에 총 예산을 적어 주세요';
-  document.getElementById('budget-spent').textContent='₩'+contracted.toLocaleString();
-  document.getElementById('budget-paid').textContent='₩'+paid.toLocaleString();
-  const rEl=document.getElementById('budget-remain');
-  rEl.textContent=total?(remain<0?'-₩'+(-remain).toLocaleString():'₩'+remain.toLocaleString()):'—';
-  rEl.style.color=remain<0?'#FFB4B4':'#A8D8A8';
-  document.getElementById('budget-remain-label').textContent=remain<0?'🔴 예산 초과':'🟢 남은 예산';
-  document.getElementById('budget-remain2').textContent='₩'+(contracted-paid).toLocaleString();
-  const chips=[['groom',`🤵 ${esc(state.name1||'신랑')}`],['bride',`👰 ${esc(state.name2||'신부')}`],['both','💑 같이'],['unknown','미정']]
-    .filter(([k])=>k!=='unknown'||pp.unknown)
-    .map(([k,l])=>`<span>${l} ₩${pp[k].toLocaleString()}</span>`).join('');
-  document.getElementById('budget-person-paid').innerHTML=chips;
-  document.getElementById('budget-pct').textContent=total?pct+'%':'';
-  document.getElementById('budget-bar').style.width=pct+'%';
+  const ed=isEditor();
+  const people=[['groom',`🤵 ${esc(state.name1||'신랑')}`],['bride',`👰 ${esc(state.name2||'신부')}`],['both','💑 같이'],['unknown','미정']]
+    .filter(([k])=>pp[k]||k==='groom'||k==='bride')
+    .map(([k,l])=>`<span>${l} ${man(pp[k])}</span>`).join('');
+  // 요약은 한 덩어리로(예전엔 총 예산 · 그래프 · 정산이 각각 큰 칸이라 화면 두 장을 넘었다)
+  document.getElementById('money-sum').innerHTML=`
+    <div class="msum-top" ${ed?'onclick="openBudgetTotal()"':''}>
+      <span class="msum-label">총 예산${ed?' ✏️':''}</span>
+      <span class="msum-total">${total?total.toLocaleString()+'원':(ed?'눌러서 정하기':'—')}</span>
+    </div>
+    <div class="msum-bar"><div style="width:${pct}%;${remain<0&&total?'background:#FFB4B4':''}"></div></div>
+    <div class="msum-grid">
+      <div><span>계약</span><b>${man(contracted)}</b></div>
+      <div><span>${remain<0&&total?'초과':'남은 예산'}</span><b style="${remain<0&&total?'color:#FFB4B4':''}">${total?man(Math.abs(remain)):'—'}</b></div>
+      <div><span>낸 돈</span><b>${man(paid)}</b></div>
+      <div><span>안 낸 돈</span><b>${man(contracted-paid)}</b></div>
+    </div>
+    <div class="msum-people">${people}</div>`;
   renderBudgetGraph(items,total);
   renderBudgetItems(items);
   renderCatTags();
-  renderLastEdit();
-  updatePersonBanner();
-  if(settlementOpen)renderSettlement();
-  if(!isEditor()){const f=document.getElementById('budget-add-form');if(f)f.style.display='none';}
+  if(moneyView==='settle')renderSettlement();
 }
+window.openBudgetTotal=function(){
+  if(!isEditor())return;
+  openModal(`<h3>💰 총 예산</h3>
+    <div class="mfield"><label>얼마까지 쓸 계획인가요? (원)</label>
+      <input type="number" inputmode="numeric" id="bt-input" value="${state.budgetTotal||''}" placeholder="예: 30000000" oninput="amtHint(this,'bt-hint')" onkeydown="if(event.key==='Enter')saveBudgetTotal()">
+      <div class="amt-hint" id="bt-hint">${krw(state.budgetTotal)}</div></div>
+    <div class="mbtn-row"><button class="mbtn primary" onclick="saveBudgetTotal()">저장</button><button class="mbtn secondary" onclick="closeModal()">닫기</button></div>`);
+  setTimeout(()=>document.getElementById('bt-input')?.focus(),60);
+};
+window.saveBudgetTotal=function(){
+  if(!isEditor())return;
+  state.budgetTotal=Math.max(0,parseInt(document.getElementById('bt-input').value)||0);
+  closeModal();scheduleSave();renderBudget();renderHome();
+};
 
+// 카테고리별 금액 = 가로로 넘기는 칩. 누르면 그 카테고리만 보인다(예전 막대그래프 자리)
 function renderBudgetGraph(items,total){
-  const g=document.getElementById('budget-graph'); g.innerHTML='';
+  const g=document.getElementById('budget-graph');
   const cats={};
-  items.forEach(bi=>{const t=getBiTotal(bi);cats[bi.cat]=(cats[bi.cat]||0)+t;});
-  const maxAmt=Math.max(...Object.values(cats),1);
-  Object.entries(cats).sort((a,b)=>b[1]-a[1]).forEach(([cat,amt])=>{
-    const pct=Math.round(amt/maxAmt*100);
-    const color=catColor(cat);
-    const isActive=activeBudgetCat===cat;
-    const row=document.createElement('div');
-    row.className='bg-row'+(isActive?' active':'');
-    row.innerHTML=`
-      <div class="bg-label-row">
-        <span class="bg-cat-name" style="color:${color}">${esc(cat)}</span>
-        <span class="bg-cat-amt">${fmtAmt(amt)}${total?` · ${Math.round(amt/total*100)}%`:''}</span>
-      </div>
-      <div class="bg-bar-wrap"><div class="bg-bar-fill" style="width:${pct}%;background:${color};opacity:${isActive?1:.7}"></div></div>`;
-    row.onclick=()=>{activeBudgetCat=activeBudgetCat===cat?null:cat;renderBudget();};
-    g.appendChild(row);
-  });
+  items.forEach(bi=>{cats[bi.cat]=(cats[bi.cat]||0)+getBiTotal(bi);});
+  const all=items.reduce((a,bi)=>a+getBiTotal(bi),0);
+  const entries=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
+  if(!items.length){g.innerHTML='';return;}
+  g.innerHTML=`<button class="chip${activeBudgetCat?'':' on'}" onclick="setBudgetCat(null)">전체 <b>${man(all)}</b></button>`
+    +entries.map(([cat,amt],i)=>`<button class="chip${activeBudgetCat===cat?' on':''}" onclick="setBudgetCat(${i})"><i style="background:${catColor(cat)}"></i>${esc(cat)} <b>${man(amt)}</b></button>`).join('');
+  g._cats=entries.map(e=>e[0]);
 }
-
+window.setBudgetCat=function(i){
+  const g=document.getElementById('budget-graph');
+  activeBudgetCat=i===null?null:(g._cats||[])[i]??null;
+  renderBudget();
+};
 window.clearBudgetFilter=function(){activeBudgetCat=null;renderBudget();};
+
+window.openAddBudget=function(){
+  if(!isEditor())return;
+  const cats=state.budgetCats||[];
+  const last=activeBudgetCat||pref.get('lastCat','');
+  openModal(`<h3>💰 예산 항목 추가</h3>
+    <div class="mfield"><label>항목</label><input id="b-name" placeholder="예: 드레스" onkeydown="if(event.key==='Enter')document.getElementById('b-amt').focus()"></div>
+    <div class="mfield"><label>계약 금액 (원, 모르면 비워 둬요)</label>
+      <input type="number" inputmode="numeric" id="b-amt" placeholder="예: 3300000" oninput="amtHint(this,'b-amt-hint')" onkeydown="if(event.key==='Enter')addBudgetItem()">
+      <div class="amt-hint" id="b-amt-hint"></div></div>
+    <div class="mfield"><label>카테고리</label><select id="b-cat">${cats.map(c=>`<option value="${esc(c)}"${c===last?' selected':''}>${esc(c)}</option>`).join('')}</select></div>
+    <div class="mbtn-row"><button class="mbtn primary" onclick="addBudgetItem()">추가</button><button class="mbtn secondary" onclick="closeModal()">닫기</button></div>
+    <p class="view-help" style="margin-top:10px">예약금 · 잔금 · 연락처는 추가한 뒤 항목을 눌러서 넣어요.</p>`);
+  setTimeout(()=>document.getElementById('b-name')?.focus(),60);
+};
 
 function payTypeCls(t){return {예약금:'deposit',계약금:'deposit',중도금:'other',잔금:'balance'}[t]||'other';}
 const PAY_TYPES=['예약금','중도금','잔금','기타'];
 
 function renderBudgetItems(items){
   const list=document.getElementById('budget-list');list.innerHTML='';
-  const fb=document.getElementById('budget-filter-badge');
-  if(activeBudgetCat){fb.style.display='block';fb.innerHTML=`<span class="bg-filter-badge" onclick="clearBudgetFilter()">✕ ${esc(activeBudgetCat)}</span> <span style="font-size:12px;color:var(--tl)">필터 중</span>`;}
-  else fb.style.display='none';
   const filtered=activeBudgetCat?items.filter(bi=>bi.cat===activeBudgetCat):items;
   if(!filtered.length){list.innerHTML='<p style="text-align:center;color:var(--tl);font-size:13px;padding:16px;">등록된 항목이 없어요</p>';return;}
   const ed=isEditor();
@@ -2218,16 +2454,16 @@ window.delBudgetSub=function(biId,subId){
   bi.subs=(bi.subs||[]).filter(s=>s.id!==subId);expandedBudget.add(biId);
   closeModal();scheduleSave();renderBudget();renderPaymentSchedule();
 };
-window.updateBudgetTotal=function(){if(!isEditor())return;state.budgetTotal=Math.max(0,parseInt(document.getElementById('budget-total-input').value)||0);scheduleSave();renderBudget();};
 window.addBudgetItem=function(){
   if(!isEditor())return;
   const n=document.getElementById('b-name').value.trim(),a=Math.max(0,parseInt(document.getElementById('b-amt').value)||0),c=document.getElementById('b-cat').value;
   if(!n){document.getElementById('b-name').focus();return;}
   const id=Date.now();
   (state.budgetItems=state.budgetItems||[]).push({id,name:n,cat:c,amt:a,subs:[],contactName:'',contactPhone:'',contactKakao:'',contactMemo:'',fullyPaid:false,paidBy:null});
-  document.getElementById('b-name').value='';document.getElementById('b-amt').value='';document.getElementById('b-amt-hint').textContent='';
-  scheduleSave();renderBudget();
-  document.getElementById('b-name').focus();
+  pref.set('lastCat',c);
+  expandedBudget.add(id); // 바로 펼쳐서 예약금 · 잔금을 넣을 수 있게
+  closeModal();scheduleSave();renderBudget();renderHome();
+  setTimeout(()=>document.querySelector(`#biamt-${id}`)?.closest('.budget-item')?.scrollIntoView({block:'center',behavior:'smooth'}),80);
 };
 window.addBudgetSub=function(biId){
   if(!isEditor())return;
@@ -2356,13 +2592,23 @@ function buildContactCard(c){
   return div;
 }
 
+window.openAddContact=function(){
+  if(!isEditor())return;
+  openModal(`<h3>📞 연락처 추가</h3>
+    <div class="mfield"><label>업체 · 담당자</label><input id="ca-name" placeholder="예: 일파르코 담당 실장님"></div>
+    <div class="mfield"><label>전화번호</label><input id="ca-phone" type="tel" inputmode="tel" placeholder="010-0000-0000"></div>
+    <div class="mfield"><label>카카오 ID (선택)</label><input id="ca-kakao"></div>
+    <div class="mfield"><label>메모 (업무시간 · 휴무일 등)</label><input id="ca-memo"></div>
+    <div class="mbtn-row"><button class="mbtn primary" onclick="addContact()">추가</button><button class="mbtn secondary" onclick="closeModal()">닫기</button></div>
+    <p class="view-help" style="margin-top:10px">예산 항목에 넣은 연락처는 여기에 자동으로 보여요.</p>`);
+  setTimeout(()=>document.getElementById('ca-name')?.focus(),60);
+};
 window.addContact=function(){
   if(!isEditor())return;
-  const name=document.getElementById('ca-name').value.trim();if(!name)return;
+  const name=document.getElementById('ca-name').value.trim();if(!name){document.getElementById('ca-name').focus();return;}
   if(!state.contacts)state.contacts=[];
   state.contacts.push({id:'sc'+Date.now(),name,phone:document.getElementById('ca-phone').value,kakao:document.getElementById('ca-kakao').value,memo:document.getElementById('ca-memo').value,cat:'기타'});
-  ['ca-name','ca-phone','ca-kakao','ca-memo'].forEach(id=>{document.getElementById(id).value='';});
-  scheduleSave();renderContacts();
+  closeModal();scheduleSave();renderContacts();
 };
 
 window.openEditContact=function(id){
@@ -2436,7 +2682,6 @@ function renderCalendar(){
     grid.appendChild(cell);
   }
   renderEvents();
-  if(document.getElementById('event-add-area'))document.getElementById('event-add-area').style.display=ed?'block':'none';
 }
 
 function eventRowHtml(ev){
@@ -2512,15 +2757,6 @@ window.saveEvent=function(id){
   const d=new Date(date+'T00:00:00');calY=d.getFullYear();calM=d.getMonth();
   closeModal();scheduleSave();renderCalendar();
 };
-window.addEvent=function(){
-  if(!isEditor())return;
-  const date=document.getElementById('ev-date').value,name=document.getElementById('ev-name').value.trim();
-  if(!date||!name){alert('날짜와 일정명을 넣어 주세요');return;}
-  (state.manualEvents=state.manualEvents||[]).push({id:Date.now(),date,name,time:document.getElementById('ev-time').value||'',memo:'',fromChecklist:false});
-  ['ev-date','ev-name','ev-time'].forEach(i=>{document.getElementById(i).value='';});
-  const d=new Date(date+'T00:00:00');calY=d.getFullYear();calM=d.getMonth();
-  scheduleSave();renderCalendar();
-};
 window.delEvent=function(id){
   if(!isEditor())return;
   if(!confirm('이 일정을 삭제할까요?'))return;
@@ -2573,10 +2809,10 @@ function renderGuests(){
   const mealConf=c.adult*mA+c.child*mC, mealMax=mealConf+c.tbdAdult*mA+c.tbdChild*mC;
   // 요약: 미정도 '올 수도 있는 사람'이라 같이 보여 준다(예전엔 참석 확정만 세서 처음엔 늘 0명이었다)
   document.getElementById('guest-stats').innerHTML=`
-    <div class="gstat"><div class="gstat-label">예상 인원</div><div class="gstat-num">${conf+maybe}<span style="font-size:13px">명</span></div><div class="gstat-sub">확정 ${conf} · 미정 ${maybe}</div></div>
-    <div class="gstat"><div class="gstat-label">명단</div><div class="gstat-num">${c.total}<span style="font-size:13px">줄</span></div><div class="gstat-sub">참석 ${c.yes} · 미정 ${c.tbd} · 불참 ${c.no}</div></div>
-    <div class="gstat"><div class="gstat-label">종이 청첩장</div><div class="gstat-num">${c.paper}<span style="font-size:13px">부</span></div><div class="gstat-sub">모바일 ${c.mobile}곳</div></div>
-    <div class="gstat"><div class="gstat-label">예상 식대</div><div class="gstat-num" style="font-size:19px">${fmtWon(mealMax)}</div><div class="gstat-sub">확정만 ${fmtWon(mealConf)}</div></div>`;
+    <div class="gstat"><div class="gstat-label">예상 인원</div><div class="gstat-num">${conf+maybe}<small>명</small></div><div class="gstat-sub">확정 ${conf} · 미정 ${maybe}</div></div>
+    <div class="gstat"><div class="gstat-label">명단</div><div class="gstat-num">${c.total}<small>줄</small></div><div class="gstat-sub">불참 ${c.no}</div></div>
+    <div class="gstat"><div class="gstat-label">종이 청첩장</div><div class="gstat-num">${c.paper}<small>부</small></div><div class="gstat-sub">모바일 ${c.mobile}</div></div>`;
+  document.getElementById('g-meal-sum').textContent=`· 미정까지 ${man(mealMax)}원`;
   document.getElementById('guest-list-card').style.display=isAll?'none':'block';
   document.getElementById('guest-all-card').style.display=isAll?'block':'none';
   document.getElementById('guest-rel-card').style.display=ed?'block':'none';
@@ -2624,20 +2860,11 @@ function renderGuestList(ed){
   const G=state.guests, sideKey=sideKeyOf();
   const gName=state.name1||'신랑', bName=state.name2||'신부';
   const list=G[sideKey]||[];
-  document.getElementById('guest-list-title').innerHTML='✦ '+(guestSide==='groom'?'🤵 '+esc(gName):'👰 '+esc(bName))+'측 하객';
-  document.getElementById('guest-add-area').style.display=ed?'':'none';
-  // 빠른 추가의 관계 목록(마지막에 고른 관계 유지)
-  const sel=document.getElementById('ng-rel');
-  if(sel){
-    const keep=sel.value;
-    sel.innerHTML=(G.relations||[]).map(r=>`<option value="${esc(r)}">${esc(r)}</option>`).join('')+'<option value="__new">+ 새 관계…</option>';
-    if((G.relations||[]).includes(keep))sel.value=keep;
-  }
-  document.getElementById('ng-cnt').textContent=newGuestCount;
+  document.getElementById('g-legend').style.display=ed&&list.length?'':'none';
   const q=(document.getElementById('g-search').value||'').trim().toLowerCase();
   const shown=q?list.filter(g=>(g.name||'').toLowerCase().includes(q)||(g.memo||'').toLowerCase().includes(q)):list;
   const rows=document.getElementById('guest-rows');
-  if(!list.length){rows.innerHTML='<p class="gempty">아직 등록된 하객이 없어요.<br>위 칸에 이름(또는 "회사 동료"처럼 묶음)을 적고 추가해 보세요 🌷</p>';return;}
+  if(!list.length){rows.innerHTML=`<p class="gempty">아직 등록된 하객이 없어요.${ed?'<br>아래 <b>+</b> 를 눌러 이름(또는 「회사 동료 15명」처럼 묶음)을 넣어 보세요 🌷':''}</p>`;return;}
   if(!shown.length){rows.innerHTML='<p class="gempty">찾는 이름이 없어요</p>';return;}
   // 관계별로 묶는다(관계 목록 순서, 목록에 없는 관계는 뒤에)
   const order=[...(G.relations||[])];
@@ -2670,36 +2897,68 @@ function guestLineHtml(g,sideKey,ed){
   </div>`;
 }
 
-window.renderGuests=renderGuests;
+window.renderGuests=renderGuests;window.renderHome=renderHome;window.renderChecklist=renderChecklist;
 window.toggleGGroup=function(key){if(collapsedGGroups.has(key))collapsedGGroups.delete(key);else collapsedGGroups.add(key);renderGuests();};
 function findGuest(sideKey,id){return (state.guests[sideKey]||[]).find(x=>x.id===id);}
 window.cycleAttend=function(sideKey,id){if(!isEditor())return;const g=findGuest(sideKey,id);if(!g)return;g.attend=ATTEND_NEXT[g.attend||'tbd'];scheduleSave();renderGuests();};
 window.cycleInvite=function(sideKey,id){if(!isEditor())return;const g=findGuest(sideKey,id);if(!g)return;g.invite=INVITE_NEXT[g.invite||'mobile'];scheduleSave();renderGuests();};
 window.stepGuest=function(sideKey,id,d){if(!isEditor())return;const g=findGuest(sideKey,id);if(!g)return;g.adult=Math.max(0,(parseInt(g.adult)||0)+d);scheduleSave();renderGuests();};
-window.stepNew=function(d){newGuestCount=Math.max(1,newGuestCount+d);document.getElementById('ng-cnt').textContent=newGuestCount;};
+window.stepNew=function(d){newGuestCount=Math.max(1,newGuestCount+d);const el=document.getElementById('ng-cnt');if(el)el.textContent=newGuestCount;};
+
+// 하객 추가(아래에서 올라오는 창). 추가해도 닫히지 않아 이어서 적을 수 있다.
+window.openAddGuest=function(){
+  if(!isEditor())return;
+  const side=guestSide==='bride'?'bride':'groom';
+  const rels=state.guests.relations||[];
+  const lastRel=pref.get('lastRel','');
+  newGuestCount=1;
+  openModal(`<h3>💐 하객 추가</h3>
+    <div class="seg seg-full" id="ng-side" style="margin-bottom:12px">
+      <button data-v="groom" class="${side==='groom'?'on':''}" onclick="pickGuestSide('groom')">🤵 ${esc(state.name1||'신랑')}측</button>
+      <button data-v="bride" class="${side==='bride'?'on':''}" onclick="pickGuestSide('bride')">👰 ${esc(state.name2||'신부')}측</button>
+    </div>
+    <div class="mfield"><label>이름 또는 묶음</label><input id="ng-name" placeholder="예: 김철수 / 회사 동료" onkeydown="if(event.key==='Enter')addGuest()"></div>
+    <div style="display:flex;gap:10px;align-items:flex-end">
+      <div class="mfield" style="flex:1;min-width:0"><label>관계</label><select id="ng-rel" onchange="onNewRelSelect(this)">
+        ${rels.map(r=>`<option value="${esc(r)}"${r===lastRel?' selected':''}>${esc(r)}</option>`).join('')}<option value="__new">+ 새 관계…</option></select></div>
+      <div class="mfield"><label>인원</label><div class="stepper big"><button onclick="stepNew(-1)" aria-label="인원 빼기">−</button><span id="ng-cnt">1</span><button onclick="stepNew(1)" aria-label="인원 더하기">+</button></div></div>
+    </div>
+    <div class="sheet-ok" id="ng-ok"></div>
+    <div class="mbtn-row"><button class="mbtn primary" onclick="addGuest()">추가</button><button class="mbtn secondary" onclick="closeModal()">닫기</button></div>
+    <p class="view-help" style="margin-top:10px">명단이 이미 있으면 <button class="linkish" onclick="openBulkGuests()">여러 명 한 번에 붙여넣기</button></p>`);
+  setTimeout(()=>document.getElementById('ng-name')?.focus(),60);
+};
+window.pickGuestSide=function(v){
+  document.querySelectorAll('#ng-side button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  if(guestSide!=='all'){guestSide=v;sessionStorage.setItem('guestSide',v);renderGuests();}
+};
 
 window.addGuest=function(){
-  if(!isEditor()||guestSide==='all')return;
+  if(!isEditor())return;
   const ni=document.getElementById('ng-name'), rs=document.getElementById('ng-rel');
   const name=ni.value.trim();
   if(!name){ni.focus();return;}
-  const sideKey=sideKeyOf();
+  const side=document.querySelector('#ng-side button.on')?.dataset.v||(guestSide==='bride'?'bride':'groom');
+  const sideKey=side==='bride'?'brideList':'groomList';
   const rel=rs.value&&rs.value!=='__new'?rs.value:(state.guests.relations[0]||'기타');
   (state.guests[sideKey]=state.guests[sideKey]||[]).push({
     id:'g'+Date.now()+Math.random().toString(36).slice(2,6),name,relation:rel,
     attend:'tbd',adult:newGuestCount,child:0,invite:'mobile',memo:''
   });
-  ni.value='';newGuestCount=1;
+  pref.set('lastRel',rel);
+  const ok=document.getElementById('ng-ok');
+  if(ok)ok.textContent=`✓ 「${name}」 ${newGuestCount}명 추가했어요 — 이어서 적어도 돼요`;
+  ni.value='';newGuestCount=1;stepNew(0);
   collapsedGGroups.delete(sideKey+'|'+rel);
-  scheduleSave();renderGuests();
+  scheduleSave();renderGuests();renderHome();
   ni.focus(); // 이어서 다음 사람
 };
 window.onNewRelSelect=function(sel){
   if(sel.value!=='__new')return;
   const name=(prompt('새 관계 이름 (예: 동호회, 교회)')||'').trim();
-  if(name&&!state.guests.relations.includes(name)){state.guests.relations.push(name);scheduleSave();}
-  renderGuests();
-  if(name)sel.value=name;
+  if(name&&!state.guests.relations.includes(name)){state.guests.relations.push(name);scheduleSave();renderGuests();}
+  if(name){if(![...sel.options].some(o=>o.value===name))sel.insertAdjacentHTML('afterbegin',`<option value="${esc(name)}">${esc(name)}</option>`);sel.value=name;}
+  else sel.selectedIndex=0;
 };
 
 window.openGuest=function(sideKey,id){
@@ -2760,7 +3019,9 @@ function parseBulkGuests(text){
   });
 }
 window.openBulkGuests=function(){
-  if(!isEditor()||guestSide==='all')return;
+  if(!isEditor())return;
+  const sideV=document.querySelector('#ng-side button.on')?.dataset.v||(guestSide==='bride'?'bride':'groom');
+  if(guestSide!==sideV){guestSide=sideV;sessionStorage.setItem('guestSide',sideV);}
   const side=guestSide==='groom'?(state.name1||'신랑'):(state.name2||'신부');
   openModal(`
     <h3>💐 ${esc(side)}측 여러 명 추가</h3>
